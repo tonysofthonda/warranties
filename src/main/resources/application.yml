@@ -1,0 +1,26 @@
+# SPRING BOOT Profile values: dev, qa, prod   (application-dev.properties, application-qa...)
+# properties will be replaced for those that exist on specific profile properties file
+spring:
+  application:
+    name: api_local_bpcs
+  profiles:
+    active: dev
+  jmx: 
+    default-domain: bpcs
+  main:
+    allow-circular-refences: true
+# SPRING BOOT ACTUATOR
+endpoints: 
+  enabled: true
+# use security for accessing Actuator endpoints
+  sensitive: false
+# Ensure that ObjectNames are modified in case of conflict (when deploying multiple war on app server)
+  jmx:
+    unique-names: true
+# JMX domain name.
+    domain: spboot.jmx.warrantiesmg
+         
+# Configuración de llamadas remotas a otros MS se debe especificar ruta y basePath          
+correos:
+  ribbon:
+    listOfServers: http://localhost:8082

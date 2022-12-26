@@ -1,0 +1,33 @@
+# EMBEDDED SERVER 
+server:
+  port: 8085
+  servlet:
+    context-path: /bpcs
+---    
+# DATASOURCE (DataSourceAutoConfiguration & DataSourceProperties)
+spring:
+  datasource:
+    url: jdbc:as400://207.130.116.47;libraries=C82BPCSF
+    username: BPCSSECOFM
+    password: BPCSADMONM
+  redis:
+    host: localhost
+    port: 6379
+    url: redis://localhost:6380
+    database: 1
+    
+# CORS configuration
+application:
+  allowedOrigin: http://localhost:4200, http://127.0.0.1:4200
+
+#Security configuration (For enable token authentication remove this config)
+config:
+  security:
+      oauth:
+          jwt:
+            enabled: false
+              
+logging:
+  level:
+    .: info
+    org.springframework: INFO
