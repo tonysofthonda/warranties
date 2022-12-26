@@ -1,0 +1,13 @@
+# DATASOURCE (DataSourceAutoConfiguration & DataSourceProperties)
+spring:
+  redis:
+    host: localhost
+    port: 6379
+    url: redis://localhost:6379
+    database: 1
+    
+# CORS configuration
+cors:
+  origin:
+    urione: http://phdmglserwfs01.hdm.am.honda.com:8080
+    uritwo: https://mss.hondaweb.com

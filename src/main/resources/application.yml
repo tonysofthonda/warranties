@@ -1,0 +1,11 @@
+# SPRING BOOT Profile values: dev, qa, prod   (application-dev.properties, application-qa...)
+# properties will be replaced for those that exist on specific profile properties file
+spring:
+  application:
+    name: api_local_managebd
+  profiles:
+    active: dev
+  jmx: 
+    default-domain: managerbd
+  main:
+    allow-circular-refences: true

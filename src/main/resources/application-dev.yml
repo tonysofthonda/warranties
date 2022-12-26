@@ -1,0 +1,18 @@
+# EMBEDDED SERVER 
+server:
+  port: 8084
+  servlet:
+    context-path: /managerbd
+  
+# DATASOURCE (DataSourceAutoConfiguration & DataSourceProperties)
+spring:
+  redis:
+    host: localhost
+    port: 6379
+    url: redis://localhost:6379
+    database: 1
+
+cors:
+  origin:
+    urione: http://localhost:4200
+    uritwo: http://127.0.0.1:4200
