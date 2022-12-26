@@ -1,0 +1,26 @@
+# DATASOURCE (DataSourceAutoConfiguration & DataSourceProperties)
+spring:
+  datasource:
+    url: jdbc:as400://207.130.116.47;libraries=C82BPCSF
+    username: BPCSSECOFM
+    password: BPCSADMONM
+  redis:
+    host: localhost
+    port: 6379
+    url: redis://localhost:6380
+    database: 1
+    
+# CORS configuration
+application:
+  allowedOrigin: http://phdmglserwfs01.hdm.am.honda.com:8080, http://phdmglserwfs01:8080
+
+microservice:
+ managedb: http://phdmglserwfs01.hdm.am.honda.com:8080/managerbd/api/
+ japanfile: http://phdmglserwfs01.hdm.am.honda.com:8080/japanfile/api/
+ bpcs: http://phdmglserwfs01.hdm.am.honda.com:8080/bpcs/api/
+ netcommerce: http://phdmglserwfs01.hdm.am.honda.com:8080/netcommerce/api/
+
+cors:
+  origin:
+    urione: http://phdmglserwfs01.hdm.am.honda.com:8080
+    uritwo: https://mss.hondaweb.com

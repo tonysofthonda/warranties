@@ -1,0 +1,34 @@
+# SPRING BOOT Profile values: dev, qa, prod   (application-dev.properties, application-qa...)
+# properties will be replaced for those that exist on specific profile properties file
+spring:
+  application:
+    name: api_local_sales
+  profiles:
+    active: dev
+  jmx: 
+    default-domain: sales
+  main:
+    allow-circular-refences: true
+  cloud:
+    config:
+      enabled: false
+    loadbalancer:
+       ribbon:
+        enable: false
+# SPRING BOOT ACTUATOR
+endpoints: 
+  enabled: true
+# use security for accessing Actuator endpoints
+  sensitive: false
+# Ensure that ObjectNames are modified in case of conflict (when deploying multiple war on app server)
+  jmx:
+    unique-names: true
+# JMX domain name.
+    domain: spboot.jmx.warrantiesmg
+feign:
+  client:
+    config:
+      default:
+        connectTimeout: 160000000
+        readTimeout: 160000000
+        loggerLevel: basic
