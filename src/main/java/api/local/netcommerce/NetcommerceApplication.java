@@ -1,0 +1,15 @@
+package api.local.netcommerce;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.openfeign.EnableFeignClients;
+
+@SpringBootApplication
+@EnableFeignClients
+public class NetcommerceApplication {
+
+	public static void main(String[] args) {
+		SpringApplication.run(NetcommerceApplication.class, args);
+	}
+
+}

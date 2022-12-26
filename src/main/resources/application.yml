@@ -1,0 +1,22 @@
+spring:
+  application:
+    name: api_local_netcommerce
+  profiles:
+    active: dev
+  jmx: 
+    default-domain: netcommerce
+  main:
+    allow-circular-refences: true
+  cloud:
+    config:
+      enabled: false
+    loadbalancer:
+       ribbon:
+        enable: false
+feign:
+  client:
+    config:
+      default:
+        connectTimeout: 5000
+        readTimeout: 5000
+        loggerLevel: basic
