@@ -1,0 +1,8 @@
+<div class="layout-menu-wrapper">
+    <p-panelMenu class="menu-lg" [model]="model" [style]="{'width':'250px'}" [transitionOptions]="'5ms'"></p-panelMenu>
+</div>
+
+<div class="layout-menu-wrapper">
+    <p-slideMenu #menu [model]="model" [popup]="true" [viewportHeight]="315" [style]="{'min-width':'200px'}" ></p-slideMenu>
+    <button class="menu-btn" #btn type="button" pButton icon="pi pi-list" (click)="menu.toggle($event)"></button>
+</div>

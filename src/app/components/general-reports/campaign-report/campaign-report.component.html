@@ -1,0 +1,193 @@
+<p-toast key="tst"></p-toast>
+<div class="main-container">
+    <div class="p-col-12">
+      <div class="card">
+        <p-table #dt [columns]="heardes" [value]="campaignData" 
+          [rows]="10" [pageLinks]="5" styleClass="p-datatable-sm p-datatable-striped"
+          [responsive]="true" responsiveLayout="stack" [loading]="loading">
+          <ng-template pTemplate="caption">
+            <div class="ui-g ui-fluid">
+                <p-dialog header="Carga" [(visible)]="display" [modal]="true" showEffect="fade" [style]="{width: '650px'}"
+                    appendToBody="true">
+                    <p-fileUpload #fileUpload name="files[]" customUpload="true"
+                        accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" (uploadHandler)="confirmUpdateSaved($event, fileUpload)">
+                    </p-fileUpload>
+                    <p-footer>
+                    <div class="ui-g-12 ui-lg-2">
+                        <button type="button" (click)="display=false" pButton icon="pi pi-times" class="ui-button-danger" label="Cancel"></button>
+                    </div>
+                    </p-footer>
+                </p-dialog>
+                <div class="ui-g-6 ui-lg-2">
+                    <button pButton type="button" label="Carga" icon="pi pi-plus" iconPos="left" (click)="display=true" class="ui-button-success"></button>
+                </div>
+            </div>
+            <div>
+                <button type="button" (click)="downloadExcelCampaign(campaignData)" pButton icon="pi pi-times" class="ui-button-danger" label="Descarga"></button>
+            </div>
+          </ng-template>
+          <ng-template pTemplate="header">
+            <tr styleClass="p-mr-2">
+              <th *ngFor="let item of heardes">
+                {{ item.label }}
+              </th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-record>
+            <tr [pSelectableRow]="record">
+              <td>
+                <span>{{ record.code }}</span>
+              </td>
+              <td>
+                <span>{{ record.bulletinNumber }}</span>
+
+              </td>
+              <td>
+                <span>{{ record.bulletinTitle }}</span>
+              </td>
+              <td>
+                <span>{{ record.model }}</span>
+              </td>
+              <td>
+                <span>{{ record.year }}</span>
+              </td>
+              <td>
+                <span>{{ record.vin }}</span>
+              </td>
+              <td>
+                <span>{{ record.client }}</span>
+              </td>
+              <td>
+                <span>{{ record.saleDate }}</span>
+              </td>
+              <td>
+                <span>{{ record.repairDate }}</span>
+              </td>
+              <td>
+                <span>{{ record.status }}</span>
+              </td>
+              <td>
+                <span>{{ record.note }}</span>
+              </td>
+              <td>
+                <span class="p-column-title">Acciones</span>
+                <button pButton pRipple type="button" class="p-button-rounded p-button-warning p-mr-2 p-mb-2" icon="pi pi-pencil" (click)="editRecord(record)"></button>
+                <button pButton pRipple type="button" class="p-button-rounded p-button-danger p-mr-2 p-mb-2" icon="pi pi-trash" (click)="deleteCampaign(record)"></button>
+              </td>
+            </tr>
+          </ng-template>
+
+          <ng-template pTemplate="emptymessage">
+            <tr>
+              <td>
+                No se encontraron registros.
+              </td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </div>
+    </div>
+</div>
+<p-confirmDialog></p-confirmDialog>
+
+
+<p-dialog styleClass="p-fluid" header="Editar" [(visible)]="displayEdit" [modal]="true" [style]="{ width: '800px' }" appendToBody="true">
+
+        <form class="ui-g-12" [formGroup]="campaignForm">
+            <div style="line-height: 1.5">
+                <h4>Datos de Campaña</h4>
+                <div class="layout-topbar-separator ng-tns-c128-0"></div>
+                <div class="p-fluid p-formgrid p-grid">
+
+                    <div class="p-field p-col-12 p-md-6">
+                        <label for="code">Codigo de Camapaña *</label>
+                        <span>
+                            <i class="fab fa-slack-hash"></i>
+                            <input formControlName="code" name="code" id="code" type="text"
+                                pInputText class="ng-dirty ng-invalid p-invalid p-mr-2" />
+                        </span>
+                    </div>
+
+                    <div class="p-field p-col-12 p-md-6">
+                        <label for="bulletinNumber">No. Boletin *</label>
+                        <span>
+                            <i class="fas fa-keyboard"></i>
+                            <input formControlName="bulletinNumber" name="bulletinNumber" id="bulletinNumber" type="text" pInputText
+                                class="ng-dirty ng-invalid p-invalid p-mr-2"/>
+                        </span>
+                    </div>
+
+                    <div class="p-field p-col-12 p-md-3">
+                        <label for="bulletinTitle">Título de Boletin *</label>
+                        <span>
+                            <i class="fas fa-keyboard"></i>
+                            <input formControlName="bulletinTitle" name="bulletinTitle" id="bulletinTitle" type="text" pInputText
+                                class="ng-dirty ng-invalid p-invalid p-mr-2" />
+                        </span>
+                    </div>
+
+                    <div class="p-field p-col-12 p-md-6">
+                        <label for="model">Modelo *</label>
+                        <span>
+                            <i class="fas fa-keyboard"></i>
+                            <input formControlName="model" name="model" id="model" type="text" pInputText
+                                class="ng-dirty ng-invalid p-invalid p-mr-2" />
+                        </span>
+                    </div>
+
+                    <div class="p-field p-col-12 p-md-3">
+                        <label for="year">Año</label>
+                        <span>
+                            <i class="fas fa-keyboard"></i>
+                            <input formControlName="year" name="year" id="year" type="text" pInputText
+                                class="ng-dirty ng-invalid p-invalid p-mr-2" />
+                        </span>
+                    </div>
+                    <div class="p-field p-col-12 p-md-4">
+                        <label for="vin">VIN *</label>
+                        <span>
+                            <i class="fas fa-keyboard"></i>
+                            <input formControlName="vin" name="vin" id="vin" type="text" pInputText
+                                class="ng-dirty ng-invalid p-invalid p-mr-2" />
+                        </span>
+                    </div>
+                    <div class="p-field p-col-12 p-md-6">
+                        <label for="client">Cliente *</label>
+                        <span>
+                            <i class="fab fa-slack-hash"></i>
+                            <input formControlName="client" name="client" id="client" type="text"
+                                pInputText class="ng-dirty ng-invalid p-invalid p-mr-2" />
+                        </span>
+                    </div>
+                    <div class="p-field p-col-12 p-md-6">
+                        <label for="gerenteServ">Fecha de Venta *</label>
+                        <span>
+                            <span>
+                                <p-calendar formControlName="saleDate" dateFormat="dd/mm/yy" [showIcon]="true"  inputId="icon"></p-calendar>
+                            </span>
+                        </span>
+                    </div>
+                    <div class="p-field p-col-12 p-md-6">
+                        <label for="gerenteServ">Fecha de Reparación *</label>
+                        <span>
+                            <span>
+                                <p-calendar formControlName="repairDate" dateFormat="dd/mm/yy" [showIcon]="true"  inputId="icon"></p-calendar>
+                            </span>
+                        </span>
+                    </div>
+                    <div class="p-field p-col-12 p-md-6">
+                        <label for="status">Estatus *</label>
+                        <span>
+                            <i class="fab fa-slack-hash"></i>
+                            <input formControlName="status" name="status" id="status" type="text"
+                                pInputText class="ng-dirty ng-invalid p-invalid p-mr-2" />
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <p-footer>
+            <button pButton pRipple type="button" (click)="updateCampaign()" label="Actualizar"
+                class="p-mr-2 p-mb-2"></button>
+        </p-footer>
+    </p-dialog>

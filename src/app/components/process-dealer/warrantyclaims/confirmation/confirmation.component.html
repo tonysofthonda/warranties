@@ -1,0 +1,229 @@
+<p-blockUI [blocked]="blockedDocument">
+    <i class="pi pi-spin pi-spinner" style="font-size: 2rem"></i>
+</p-blockUI>
+<p-toast key="tst"></p-toast>
+<div class="content-container">
+    <div class="layout-topbar-separator"></div>
+
+    <p-tabView>
+        <p-tabPanel header="Datos Generales" leftIcon="pi pi-file" tooltip="detalles">
+            <p-divider align="left">
+                <span class="p-tag">Información Del Reporte <i class="pi pi-file" style="font-size: .7rem"></i></span>
+            </p-divider>
+            <h5>Número De Reclamo: </h5>
+            <p> {{ warrantyClaim.personalInformation.reportInformation.claimNumber }}</p>
+            <h5>Nombre Del Distribuidor: </h5>
+            <p> {{ warrantyClaim.personalInformation.reportInformation.dealerName }}</p>
+            <h5>Elaborado Por: </h5>
+            <p> {{ warrantyClaim.personalInformation.reportInformation.elaboratedBY }}</p>
+            <h5>Fecha De Creación: </h5>
+            <p> {{ warrantyClaim.personalInformation.reportInformation.reportCreationDate | date : 'medium' }}</p>
+            <h5>Número De Servicio: </h5>
+            <p> {{ warrantyClaim.personalInformation.reportInformation.serviceOrderNumber }}</p>
+            <p-divider align="left">
+                <span class="p-tag">Información De La Unidad Móvil <i class="pi pi-car"
+                        style="font-size: .7rem"></i></span>
+            </p-divider>
+            <h5>Número De VIN: </h5>
+            <p> {{ warrantyClaim.personalInformation.mobileUnitInformation.vinNumber }}</p>
+            <h5>Número De Serie Del Motor: </h5>
+            <p> {{ warrantyClaim.personalInformation.mobileUnitInformation.engineSerie }}</p>
+            <h5>Modelo: </h5>
+            <p> {{ warrantyClaim.personalInformation.mobileUnitInformation.model.label }}</p>
+            <h5>Propietario</h5>
+            <p> {{ warrantyClaim.personalInformation.mobileUnitInformation.owner }}</p>
+            <h5>Vendido Por: </h5>
+            <p> {{ warrantyClaim.personalInformation.mobileUnitInformation.saleBy }}</p>
+            <h5>Fecha De Venta: </h5>
+            <p> {{ warrantyClaim.personalInformation.mobileUnitInformation.saleDate | date : 'medium' }}</p>
+            <p-divider align="left">
+                <span class="p-tag">Información Del Cliente <i class="pi pi-user" style="font-size: .7rem"></i></span>
+            </p-divider>
+            <h5>Nombre Del Cliente: </h5>
+            <p> {{ warrantyClaim.personalInformation.clientInformation.clientName }}</p>
+            <h5>Dirección: </h5>
+            <p> {{ warrantyClaim.personalInformation.clientInformation.address }}</p>
+            <h5>Teléfono: </h5>
+            <p> {{ warrantyClaim.personalInformation.clientInformation.phone }}</p>
+            <h5>Estado: </h5>
+            <p> {{ warrantyClaim.personalInformation.clientInformation.state.label }}</p>
+            <h5>Municipio: </h5>
+            <p> {{ warrantyClaim.personalInformation.clientInformation.location.label }}</p>
+            <h5>Correo Electrónico: </h5>
+            <p> {{ warrantyClaim.personalInformation.clientInformation.email }}</p>
+        </p-tabPanel>
+        <p-tabPanel header="Clasificación De Reclamo" leftIcon="pi pi-folder-open" tooltip="detalles">
+            <p-divider align="left">
+                <span class="p-tag">Detalle Del Servicio <i class="pi pi-cog" style="font-size: .7rem"></i></span>
+            </p-divider>
+            <h5>Tipo De Reclamo: </h5>
+            <p> {{ warrantyClaim.classificationInformation.typeClaim.label }}</p>
+            <h5>Grado: </h5>
+            <p> {{ warrantyClaim.classificationInformation.grade.label }}</p>
+            <h5>Servicio Realizado: </h5>
+            <p> {{ warrantyClaim.classificationInformation.servicePerformed.label }}</p>
+            <h5>Categoría Del Problema: </h5>
+            <p> {{ warrantyClaim.classificationInformation.categoryProblem.label }}</p>
+            <h5>Técnico Reparador: </h5>
+            <p> {{ warrantyClaim.classificationInformation.repairTechnician }}</p>
+            <h5>Fecha De Falla Reportada: </h5>
+            <p> {{ warrantyClaim.classificationInformation.reportedDate | date : 'medium' }}</p>
+            <h5>Fecha De Reparación: </h5>
+            <p> {{ warrantyClaim.classificationInformation.rapairDate | date : 'medium' }}</p>
+        </p-tabPanel>
+        <p-tabPanel header="Información De Partes" leftIcon="pi pi-check-circle" tooltip="detalles">
+            <p-divider align="left">
+                <span class="p-tag">Información De Partes <i class="pi pi-cog" style="font-size: .7rem"></i></span>
+            </p-divider>
+            <h5>Parte Afectada: </h5>
+            <p> {{ warrantyClaim.partInformation.defectPart.affectedPart.label }}</p>
+            <h5>Defecto: </h5>
+            <p> {{ warrantyClaim.partInformation.defectPart.affectedDefect.label }}</p>
+            <h5>Síntoma: </h5>
+            <p> {{ warrantyClaim.partInformation.defectPart.symptom.label }}</p>
+            <h5>Diagnóstico Técnico: </h5>
+            <p> {{ warrantyClaim.partInformation.defectPart.diagTechnical }}</p>
+            <h5>Acción Correctiva: </h5>
+            <p> {{ warrantyClaim.partInformation.defectPart.correctiveAction }}</p>
+            <p-divider align="left">
+                <span class="p-tag">Relación De Partes Reemplazadas En Reparación <i class="pi pi-cog"
+                        style="font-size: .7rem"></i></span>
+            </p-divider>
+            <br>
+            <p-table #dt [columns]="headerRelationPart" [value]="warrantyClaim.partInformation.relationPart"
+                selectionMode="single" [paginator]="true" [rows]="10" [showCurrentPageReport]="true" [filterDelay]="0"
+                currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+                styleClass="p-datatable-sm p-datatable-striped"
+                [globalFilterFields]="['code', 'descripcion']">
+                <ng-template pTemplate="header">
+                    <tr styleClass="p-mr-2">
+                        <th *ngFor="let item of headerRelationPart" pSortableColumn="codigo">
+                            {{item.label}}
+                        </th>
+                    </tr>
+                </ng-template>
+
+                <ng-template pTemplate="body" let-part>
+                    <tr>
+                        <td *ngIf="part.part">
+                            <span>{{ part.part.partNumber }}</span>
+                        </td>
+                        <td>
+                            <span>{{ part.quantity }}</span>
+                        </td>
+                        <td>
+                            <span>{{ part.description }}</span>
+                        </td>
+                        <td>
+                            <span>{{ part.unitCost | currency:'USD' }}</span>
+                        </td>
+                        <td>
+                            <span>{{ part.packingCost }}</span>
+                        </td>
+                        <td>
+                            <span>{{ part.total | currency:'USD' }}</span>
+                        </td>
+                    </tr>
+                </ng-template>
+
+                <ng-template pTemplate="emptymessage">
+                    <tr>
+                        <td colspan="5">
+                            No se encontraron registros.
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+
+            <p-divider align="left">
+                <span class="p-tag">Otros Trabajos <i class="pi pi-cog" style="font-size: .7rem"></i></span>
+            </p-divider>
+            <br>
+            <p-table #dt [columns]="headerOtherJob" [value]="warrantyClaim.partInformation.otherJobInformation"
+                selectionMode="single" responsiveLayout="scroll" [paginator]="true" [rows]="10"
+                [showCurrentPageReport]="true"
+                currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+                [scrollable]="true" [filterDelay]="0" styleClass="p-datatable-sm p-datatable-striped" [globalFilterFields]="['descripcion']">
+                <ng-template pTemplate="header">
+                    <tr styleClass="p-mr-2">
+                        <th *ngFor="let item of headerOtherJob" pSortableColumn="codigo">
+                            {{item.label}}
+                        </th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-otherJobs>
+                    <tr [pSelectableRow]="otherJobs">
+                        <td>
+                            <span>{{ otherJobs.description }}</span>
+                        </td>
+                        <td>
+                            <span>{{ otherJobs.quantity }}</span>
+                        </td>
+                        <td>
+                            <span>{{ otherJobs.details }}</span>
+                        </td>
+                        <td>
+                            <span>{{ otherJobs.invoice }}</span>
+                        </td>
+                        <td>
+                            <span>{{ otherJobs.cost | currency:'USD' }}</span>
+                        </td>
+                        <td>
+                            <span>{{ otherJobs.total | currency:'USD' }}</span>
+                        </td>
+                    </tr>
+                </ng-template>
+
+                <ng-template pTemplate="emptymessage">
+                    <tr>
+                        <td>
+                            No se encontraron registros.
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+            
+            <p-divider align="left">
+                <span class="p-tag">Evidencias <i class="pi pi-cog" style="font-size: .7rem"></i></span>
+            </p-divider>
+            <div *ngFor="let evidence of warrantyClaim.partInformation.evidence; index as i">
+                <h5>Archivo {{ evidence.fileName }}</h5>
+                <p>Tipo: {{ evidence.fileType }}</p>
+            </div>
+            <p-divider align="left">
+                <span class="p-tag">Detalles Del Costo <i class="pi pi-cog" style="font-size: .7rem"></i></span>
+            </p-divider>
+            <h5>Total Partes Remplazadas: </h5>
+            <p> {{ warrantyClaim.partInformation.costDetail.sparePartCost | currency:'USD' }}</p>
+            <h5>Total Desembarque: </h5>
+            <p> {{ warrantyClaim.partInformation.costDetail.landingCost | currency:'USD' }}</p>
+            <h5>Costo Refacciones: </h5>
+            <p> {{ warrantyClaim.partInformation.costDetail.totalSparePart | currency:'USD' }}</p>
+            <h5>Costo Mano De Obra: </h5>
+            <p> {{ warrantyClaim.partInformation.costDetail.laborCost | currency:'USD' }}</p>
+            <h5>Total Tiempo Labor: </h5>
+            <p> {{ warrantyClaim.partInformation.costDetail.laborTime  | currency:'USD'}}</p>
+            <h5>Costo Total Tiempo Labor: </h5>
+            <p> {{ warrantyClaim.partInformation.costDetail.totalLaborTime | currency:'USD' }}</p>
+            <h5>Total Partes Y Total Tiempo Labor: </h5>
+            <p> {{ warrantyClaim.partInformation.costDetail.totalSparePartAndLabor | currency:'USD' }}</p>
+        </p-tabPanel>
+    </p-tabView>
+
+
+
+    <div>
+        
+        <div *ngIf="!consultForm; else elseBlock">
+            <p-button label="Anterior" class="p-mr-2 p-mb-2" (onClick)="backStep()" icon="pi pi-angle-left"></p-button>
+            <p-button label="Enviar" class="p-mr-2 p-mb-2" (onClick)="confirmation()" icon="pi pi-check" iconPos="right"
+            [style]="{'margin-left': '.5em'}" styleClass="p-button-success"></p-button>
+        </div>
+        <ng-template #elseBlock>
+            <p-button label="Anterior" class="p-mr-2 p-mb-2" (onClick)="backStep()" icon="pi pi-angle-left"></p-button>
+            <p-button label="Finalizar" class="p-mr-2 p-mb-2" (onClick)="endView()" icon="pi pi-check" iconPos="right"
+            [style]="{'margin-left': '.5em'}" styleClass="p-button-success"></p-button>
+        </ng-template>
+
+    </div>
+</div>

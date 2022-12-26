@@ -1,0 +1,22 @@
+<div class="container">
+    <p-tabView *ngIf="setImfo">
+        <p-tabPanel header="Datos Generales" leftIcon="fa fa-id-card">
+            <personalinformation></personalinformation>
+        </p-tabPanel>
+        <p-tabPanel header="Seguimiento de Servicio" leftIcon="fa fa-shapes">
+            <tracking-service></tracking-service>
+            <div>
+                <button pButton pRipple type="button" (click)="confirmData()" label="Siguiente"
+                    class="p-mr-2 p-mb-2"></button>
+            </div>
+        </p-tabPanel>
+    </p-tabView>
+    <p-tabView *ngIf="!setImfo">
+        <p-tabPanel header="Confirmar Datos" leftIcon="fa fa-id-card">
+            <div style="overflow: auto !important; max-height: 480px !important;">
+                <personalinformation></personalinformation>
+                <tracking-service></tracking-service>
+            </div>
+        </p-tabPanel>
+    </p-tabView>
+</div>

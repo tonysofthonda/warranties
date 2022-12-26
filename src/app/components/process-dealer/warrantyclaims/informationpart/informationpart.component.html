@@ -1,0 +1,319 @@
+<p-blockUI [blocked]="blockedDocument">
+    <i class="pi pi-spin pi-spinner" style="font-size: 2rem"></i>
+</p-blockUI>
+<div class="content-container" *ngIf="!consultForm; else elseBlock">
+    <div class="layout-topbar-separator"></div>
+    <p-toast key="tst" position="top-right"></p-toast>
+    <p-accordion [multiple]="true">
+        <p-accordionTab header="RELACIÓN DE PARTES REMPLAZADAS EN LA REPARACIÓN *" [selected]="true">
+            <relation-part-table *ngIf="partsReplaced" (onPartsEmitted)="relationPartsEmitted( $event )"
+                [partsReplacedParm]="partsReplaced"></relation-part-table>
+        </p-accordionTab>
+        <p-accordionTab header="SÍNTOMAS Y DEFECTOS *" [selected]="true">
+            <form class="ui-g-12" [formGroup]="partsInformation" *ngIf="partsInformation">
+                <div class="p-grid p-fluid">
+                    <div class="p-field p-col-12 p-md-4">
+                        <label for="affectedPart">Sección afectada *</label>
+                        <span>
+                            <p-dropdown formControlName="affectedPart" [options]="parts" optionLabel="label"
+                                id="affectedPart" name="affectedPart" placeholder="Seleccione la parte afectada"
+                                [showClear]="false" (onChange)="onChangePart()">
+                            </p-dropdown>
+                        </span>
+                        <app-validation-input [formGroup]="partsInformation" formInputName="affectedPart"
+                            [validation_messages]="validations"></app-validation-input>
+                    </div>
+                    <div class="p-field p-col-12 p-md-4">
+                        <label for="affectedDefect">Defecto *</label>
+                        <span>
+                            <p-dropdown formControlName="affectedDefect" [options]="defects" optionLabel="label"
+                                id="affectedDefect" name="affectedDefect" placeholder="Seleccione un defecto"
+                                [style]="{ width: '100%' }" [showClear]="false" (onChange)="onChangeDefect()">
+                            </p-dropdown>
+                        </span>
+                        <app-validation-input [formGroup]="partsInformation" formInputName="affectedDefect"
+                            [validation_messages]="validations"></app-validation-input>
+                    </div>
+                    <div class="p-field p-col-12 p-md-4">
+                        <label for="symptom">Síntoma *</label>
+                        <span>
+                            <p-dropdown formControlName="symptom" [options]="symptoms" appendTo="body"
+                                optionLabel="label" name="selectSymptom" id="symptom"
+                                placeholder="Seleccione un sintoma" [style]="{ width: '100%' }" [showClear]="false">
+                            </p-dropdown>
+                        </span>
+                        <app-validation-input [formGroup]="partsInformation" formInputName="symptom"
+                            [validation_messages]="validations"></app-validation-input>
+                    </div>
+                    <div class="p-field p-col-12 p-md-6">
+                        <label for="diagTechnical ">Diagnóstico técnico *:</label>
+                        <span>
+                            <textarea formControlName="diagTechnical" placeholder="Diagnostico encontrado..." rows="5"
+                                cols="30" pInputTextarea></textarea>
+                        </span>
+                        <app-validation-input [formGroup]="partsInformation" formInputName="diagTechnical"
+                            [validation_messages]="validations">
+                        </app-validation-input>
+                    </div>
+                    <div class="p-field p-col-12 p-md-6">
+                        <label for="correctiveAction ">Acción correctiva *:</label>
+                        <span>
+                            <textarea formControlName="correctiveAction" placeholder="Acciones a realizar..." rows="5"
+                                cols="30" pInputTextarea></textarea>
+                        </span>
+                        <app-validation-input [formGroup]="partsInformation" formInputName="correctiveAction"
+                            [validation_messages]="validations">
+                        </app-validation-input>
+                    </div>
+                </div>
+            </form>
+        </p-accordionTab>
+        <p-accordionTab header="TOTAL OTROS TRABAJOS" [selected]="true">
+            <other-jobs *ngIf="otherExpenses" (onExpensesEmitted)="otherExpensesEmitted( $event )"
+                [otherExpensesParam]="otherExpenses"></other-jobs>
+        </p-accordionTab>
+        <p-accordionTab header="EVIDENCIAS" [selected]="true">
+            <p-fileUpload #form name="myfile[]" customUpload="true" (uploadHandler)="myUploader($event, form)" (onClear)="onClear()" 
+                multiple="multiple" maxFileSize="5000000"
+                accept="video/mp4, video/3gpp, .jpg, image/png, .pdf, .docx, .xlsx, .doc, .xls">
+            </p-fileUpload>
+            <ng-template pTemplate="content">
+                <ul>
+                    <li *ngFor="let file of evidenceResponse">
+                        <div *ngIf="file.fileType === 'IMAGE'">
+                            <p-image [src]="file.fileViewUri" alt="Image" width="80" height="80" [preview]="true">
+                            </p-image>
+                            {{file.fileName}} - {{file.fileType}}
+                        </div>
+                        <div *ngIf="file.fileType === 'APP'">
+                            <a [href]="file.fileViewUri" target="_blank" title="View Resume"> <i class="pi pi-file" style="font-size: 2rem"></i></a>
+                            {{file.fileName}} - {{file.fileType}}
+                        </div>
+                        <div *ngIf="file.fileType === 'VIDEO'">
+                            <div class="video">
+                                <video controls (click)="toggleVideo()" #videoPlayer>
+                                    <source [src]="file.fileViewUri" />
+                                    Browser not supported
+                                </video>
+                            </div>
+                            {{file.fileName}} - {{file.fileType}}
+                        </div>
+                    </li>
+                </ul>
+            </ng-template>
+        </p-accordionTab>
+        <p-accordionTab header="DETALLE DEL COSTO" [selected]="true">
+
+            <p-splitter [style]="{'height': '200px'}" [panelSizes]="[20, 20, 20, 20]" layout="horizontal">
+                <ng-template pTemplate>
+                    <p-card header="Total Desembarque" styleClass="p-card-shadow">
+                        <p>
+                            {{ landingCost | currency:'USD' }}
+                        </p>
+                    </p-card>
+                </ng-template>
+                <ng-template pTemplate>
+                    <p-card header="Total Tiempo Labor" styleClass="p-card-shadow">
+                        <p>
+                            {{ laborTime | currency:'USD' }}
+                        </p>
+                    </p-card>
+                </ng-template>
+                <ng-template pTemplate>
+                    <p-card header="Costo Refacciones" styleClass="p-card-shadow">
+                        <p>
+                            {{ totalSparePart | currency:'USD' }}
+                        </p>
+                    </p-card>
+                </ng-template>
+                <ng-template pTemplate>
+                    <p-card header="Costo Mano De Obra" styleClass="p-card-shadow">
+                        <p>
+                            {{ laborCost | currency:'USD' }}
+                        </p>
+                    </p-card>
+                </ng-template>
+            </p-splitter>
+            <p-splitter layout="horizontal" [panelSizes]="[30, 30, 40]">
+                <ng-template pTemplate>
+                    <p-card header="Total Partes Remplazadas" styleClass="p-card-shadow">
+                        <p>
+                            {{ sparePartCost | currency:'USD' }}
+                        </p>
+                    </p-card>
+                </ng-template>
+                <ng-template pTemplate>
+                    <p-card header="Costo Total Tiempo Labor" styleClass="p-card-shadow">
+                        <p>
+                            {{ totalLaborTime | currency:'USD' }}
+                        </p>
+                    </p-card>
+                </ng-template>
+                <ng-template pTemplate>
+                    <p-card header="Total Partes Y Total Tiempo Labor" styleClass="p-card-shadow">
+                        <p style="color: green;">
+                            {{ totalSparePartAndLabor | currency:'USD' }}
+                        </p>
+                    </p-card>
+                </ng-template>
+            </p-splitter>
+        </p-accordionTab>
+    </p-accordion>
+    <br>
+    <div>
+        <p-button label="Anterior" class="p-mr-2 p-mb-2" (onClick)="backStep()" icon="pi pi-angle-left"></p-button>
+        <p-button label="Siguiente" class="p-mr-2 p-mb-2" (onClick)="nextStep()" icon="pi pi-angle-right"
+            [disabled]="!(partsReplaced.length > 0 && partsInformation.valid)" iconPos="right" [style]="{'margin-left': '.5em'}"></p-button>
+    </div>
+</div>
+<ng-template #elseBlock>
+    <p-accordion [multiple]="true">
+        <p-accordionTab header="RELACIÓN DE PARTES REMPLAZADAS EN LA REPARACIÓN" [selected]="true" [disabled]="true">
+            <relation-part-table *ngIf="partsReplaced" (onPartsEmitted)="relationPartsEmitted( $event )"
+                [partsReplacedParm]="partsReplaced"></relation-part-table>
+        </p-accordionTab>
+        <p-accordionTab header="SÍNTOMAS Y DEFECTOS" [selected]="true" [disabled]="true">
+            <form class="ui-g-12" [formGroup]="partsInformation" *ngIf="partsInformation">
+                <div class="p-grid p-fluid">
+                    <div class="p-field p-col-12 p-md-4">
+                        <label for="affectedPart">Sección afectada</label>
+                        <span>
+                            <p-dropdown formControlName="affectedPart" [options]="parts" optionLabel="label"
+                                id="affectedPart" name="affectedPart" placeholder="Seleccione la parte afectada"
+                                [showClear]="false" (onChange)="onChangePart()">
+                            </p-dropdown>
+                        </span>
+                    </div>
+                    <div class="p-field p-col-12 p-md-4">
+                        <label for="affectedDefect">Defecto</label>
+                        <span>
+                            <p-dropdown formControlName="affectedDefect" [options]="defects" optionLabel="label"
+                                id="affectedDefect" name="affectedDefect" placeholder="Seleccione un defecto"
+                                [style]="{ width: '100%' }" [showClear]="false" (onChange)="onChangeDefect()">
+                            </p-dropdown>
+                        </span>
+                    </div>
+                    <div class="p-field p-col-12 p-md-4">
+                        <label for="symptom">Síntoma</label>
+                        <span>
+                            <p-dropdown formControlName="symptom" [options]="symptoms" appendTo="body"
+                                optionLabel="label" name="selectSymptom" id="symptom"
+                                placeholder="Seleccione un sintoma" [style]="{ width: '100%' }" [showClear]="false">
+                            </p-dropdown>
+                        </span>
+                    </div>
+                    <div class="p-field p-col-12 p-md-6">
+                        <label for="diagTechnical ">Diagnóstico técnico :</label>
+                        <span>
+                            <textarea formControlName="diagTechnical" placeholder="Diagnostico encontrado..." rows="5"
+                                cols="30" pInputTextarea></textarea>
+                        </span>
+                    </div>
+                    <div class="p-field p-col-12 p-md-6">
+                        <label for="correctiveAction ">Acción correctiva :</label>
+                        <span>
+                            <textarea formControlName="correctiveAction" placeholder="Acciones a realizar..." rows="5"
+                                cols="30" pInputTextarea></textarea>
+                        </span>
+                    </div>
+                </div>
+            </form>
+        </p-accordionTab>
+        <p-accordionTab header="TOTAL OTROS TRABAJOS" [selected]="true" [disabled]="true">
+            <other-jobs *ngIf="otherExpenses" (onExpensesEmitted)="otherExpensesEmitted( $event )"
+                [otherExpensesParam]="otherExpenses"></other-jobs>
+        </p-accordionTab>
+        <p-accordionTab header="EVIDENCIAS" [selected]="true" [disabled]="true">
+            <!-- <p-fileUpload name="myfile[]" customUpload="true" (uploadHandler)="myUploader($event)"
+                    multiple="multiple" maxFileSize="5000000"
+                    accept="video/mp4, video/3gp, image/jpg, image/png, .pdf, .docx, .xlsx, .doc, .xls" > -->
+            <ng-template pTemplate="content" *ngIf="evidenceResponse.length">
+                <ul>
+                    <li *ngFor="let file of evidenceResponse">
+                        <div *ngIf="file.fileType === 'IMAGE'">
+                            <p-image [src]="file.fileViewUri" alt="Image" width="80" height="80" [preview]="true">
+                            </p-image>
+                            {{file.fileName}} - {{file.fileType}}
+                        </div>
+                        <div *ngIf="file.fileType === 'APP'">
+                            <a [href]="file.fileViewUri" target="_blank" title="View Resume">Resume</a>
+                            {{file.fileName}} - {{file.fileType}}
+                        </div>
+                        <div *ngIf="file.fileType === 'VIDEO'">
+                            <div class="video">
+                                <video controls (click)="toggleVideo()" #videoPlayer>
+                                    <source [src]="file.fileViewUri" />
+                                    Browser not supported
+                                </video>
+                            </div>
+                            {{file.fileName}} - {{file.fileType}}
+                        </div>
+                    </li>
+                </ul>
+            </ng-template>
+            <!-- </p-fileUpload> -->
+        </p-accordionTab>
+        <p-accordionTab header="DETALLE DEL COSTO" [selected]="true" [disabled]="true">
+
+            <p-splitter [style]="{'height': '200px'}" [panelSizes]="[20, 20, 20, 20]" layout="horizontal">
+                <ng-template pTemplate>
+                    <p-card header="Total Desembarque" styleClass="p-card-shadow">
+                        <p>
+                             {{ landingCost | currency:'USD' }}
+                        </p>
+                    </p-card>
+                </ng-template>
+                <ng-template pTemplate>
+                    <p-card header="Total Tiempo Labor" styleClass="p-card-shadow">
+                        <p>
+                             {{ laborTime | currency:'USD' }}
+                        </p>
+                    </p-card>
+                </ng-template>
+                <ng-template pTemplate>
+                    <p-card header="Costo Refacciones" styleClass="p-card-shadow">
+                        <p>
+                             {{ totalSparePart | currency:'USD' }}
+                        </p>
+                    </p-card>
+                </ng-template>
+                <ng-template pTemplate>
+                    <p-card header="Costo Mano De Obra" styleClass="p-card-shadow">
+                        <p>
+                             {{ laborCost | currency:'USD' }}
+                        </p>
+                    </p-card>
+                </ng-template>
+            </p-splitter>
+            <p-splitter layout="horizontal" [panelSizes]="[30, 30, 40]">
+                <ng-template pTemplate>
+                    <p-card header="Total Partes Remplazadas" styleClass="p-card-shadow">
+                        <p>
+                             {{ sparePartCost | currency:'USD' }}
+                        </p>
+                    </p-card>
+                </ng-template>
+                <ng-template pTemplate>
+                    <p-card header="Costo Total Tiempo Labor" styleClass="p-card-shadow">
+                        <p>
+                             {{ totalLaborTime | currency:'USD' }}
+                        </p>
+                    </p-card>
+                </ng-template>
+                <ng-template pTemplate>
+                    <p-card header="Total Partes Y Total Tiempo Labor" styleClass="p-card-shadow">
+                        <p style="color: green;">
+                             {{ totalSparePartAndLabor | currency:'USD' }}
+                        </p>
+                    </p-card>
+                </ng-template>
+            </p-splitter>
+        </p-accordionTab>
+    </p-accordion>
+    <br>
+    <div>
+        <p-button label="Anterior" class="p-mr-2 p-mb-2" (onClick)="backStep()" icon="pi pi-angle-left"></p-button>
+        <p-button label="Siguiente" class="p-mr-2 p-mb-2" (onClick)="nextStep()" icon="pi pi-angle-right"
+            iconPos="right" [style]="{'margin-left': '.5em'}"></p-button>
+    </div>
+</ng-template>

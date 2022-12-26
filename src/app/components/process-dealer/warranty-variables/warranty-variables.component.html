@@ -1,0 +1,17 @@
+<div class="main-container">
+    <div class="container">
+        <div class="card">
+            <p class="title">Variables para reportes de Garantías</p>
+            <div class="layout-topbar-separator"></div>
+            <p-toast key="tst" position="top-right"></p-toast>
+            <p-accordion>
+                <p-accordionTab header="PRECIO DEL DOLAR Y VALORES DE PORCENTAJES" [selected]="true">
+                    <app-values-of-percentage></app-values-of-percentage>                                                                
+                </p-accordionTab>
+                <p-accordionTab header="VALORES DE LISTA">
+                    <app-values-of-list></app-values-of-list>
+                </p-accordionTab>
+            </p-accordion>
+        </div>
+    </div>
+</div>

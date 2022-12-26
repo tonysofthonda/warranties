@@ -1,0 +1,11 @@
+<p-card header="Garantías" subheader="Reclamo De Garantía" styleClass="p-card-shadow">
+    <p-toast key="tst" position="top-right"></p-toast>
+    <!-- <p-button pTooltip="Limpiar formulario" placeholder="Right" (onClick)="refreshForm()" class="p-mr-2 p-mb-2" 
+            icon="pi pi-undo" iconPos="right" [style]="{'margin-left': '.5em'}">
+    </p-button> -->
+    <p-steps [model]="items" [(activeIndex)]="activeIndex" [readonly]="true"></p-steps>
+    <hr>
+    <div>
+        <router-outlet></router-outlet>
+    </div>
+</p-card>

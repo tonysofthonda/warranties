@@ -1,0 +1,144 @@
+<div class="main-container">
+    <div class="container">
+        <p class="title">Catálogo de Síntomas</p>
+    </div>
+</div>
+<div class="main-container">
+    <div class="container">
+        <p-toast key="tst"></p-toast>
+        <div class="layout-topbar-separator"></div>
+        <div>
+            <div class="container">
+                <div class="p-col-12">
+                    <div class="card">
+                        <p-table #dt [columns]="heardes" [value]="sintoma"
+                            [responsive]="true" responsiveLayout="stack"
+                            [rows]="10" [pageLinks]="5" styleClass="p-datatable-sm p-datatable-striped"
+                            [globalFilterFields]="['code', 'descriptionEng','descriptionSpa']" 
+                            [loading]="loadingSympton" [paginator]="true">
+                            <ng-template pTemplate="caption">
+                                <div class="p-d-flex p-flex-column p-flex-md-row p-jc-md-between table-header">
+                                    <div class="p-field p-col-2">
+                                        <button pButton pRipple type="button" (click)="addSintoma()" label="&nbsp; Agregar"
+                                            class="p-button-rounded" pTooltip="Agregar sintoma">
+                                            <i class="fas fa-plus"></i>
+                                        </button>
+                                    </div>
+                                    <span>
+                                        <i class="pi pi-search"></i>
+                                        <input pInputText type="text"
+                                            (input)="dt.filterGlobal($event.target.value, 'contains')"
+                                            placeholder="Buscar síntoma" />
+                                    </span>
+                                </div>
+                            </ng-template>
+
+                            <ng-template pTemplate="header" style="table-layout: auto;">
+                                <tr styleClass="p-mr-2">
+                                    <th *ngFor="let item of heardes" pSortableColumn="codigo">
+                                        {{item.label}}
+                                    </th>
+                                </tr>
+                            </ng-template>
+
+                            <ng-template pTemplate="body" let-sintoma>
+                                <tr [pSelectableRow]="sintoma">
+                                    <td>
+                                        <span class="ui-column-title">{{ sintoma.code }}</span>
+                                    </td>
+                                    <td>
+                                        <span class="ui-column-title">{{ sintoma.descriptionEng }}</span>
+                                    </td>
+                                    <td>
+                                        <span class="ui-column-title">{{ sintoma.descriptionSpa }}</span>
+                                    </td>
+                                    <td>
+                                        <span class="ui-column-title">
+                                            <p-inputSwitch [(ngModel)]="sintoma.status" pTooltip="Actualizar estatus"
+                                            (onChange)="updateStatus(sintoma)"></p-inputSwitch>
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <span class="ui-column-title">
+                                            <button pButton pRipple type="button" (click)="editSintoma(sintoma)"
+                                                class="p-button-rounded p-button-warning p-mr-2 p-mb-2"
+                                                icon="pi pi-pencil" pTooltip="Editar registro"></button>
+                                        </span>
+
+                                    </td>
+                                </tr>
+                            </ng-template>
+
+                            <ng-template pTemplate="emptymessage">
+                                <tr>
+                                    <td colspan="4">
+                                        No se encontraron registros.
+                                    </td>
+                                </tr>
+                            </ng-template>
+                        </p-table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="ui-g-6">
+    <p-dialog icon="pi pi-times" header="{{ title }}" [modal]="true" [(visible)]="display" appendToBody="true" [style]="{ width: '800px' }">
+        <form [formGroup]="datosForm" #form="ngForm" class="ui-g ui-fluid form-group">
+            <div style="line-height: 1.5">
+                <div class="p-fluid p-formgrid p-grid">
+                    <div class="p-field p-col-6">
+                        <label for="code">Código Síntoma *</label>
+                        <span>
+                            <p-inputMask formControlName="code" name="code" id="code" type="text" mask="999-99"
+                                placeholder="999-99"> </p-inputMask>
+                        </span>
+                        <app-validation-input [formGroup]="datosForm" formInputName="code"
+                            [validation_messages]="validations"></app-validation-input>
+                    </div>
+                    <div class="p-field p-col-4">
+                        <label for="status">Estatus *</label>
+                        <span>
+                            <span>Inactivo &nbsp;</span>
+                            <p-inputSwitch class="ng-untouched ng-pristine" formControlName="status" name="status"
+                                id="status">
+                            </p-inputSwitch>
+                            <span>&nbsp; Activo</span>
+                        </span>
+                    </div>
+                    <div class="p-field p-col-12">
+                        <label for="descriptionEng"> Descripción (en inglés)*
+                        </label>
+                        <span>
+                            <i class="fas fa-keyboard"></i>
+                            <input formControlName="descriptionEng" name="descriptionEng" id="descriptionEng" type="text"
+                                pInputText />
+                        </span>
+                        <app-validation-input [formGroup]="datosForm" formInputName="descriptionEng"
+                            [validation_messages]="validations"></app-validation-input>
+                    </div>
+
+                    <div class="p-field p-col-12">
+                        <label for="descriptionSpa"> Descripción (en español)*
+                        </label>
+                        <span>
+                            <i class="fas fa-keyboard"></i>
+                            <input formControlName="descriptionSpa" name="descriptionSpa" id="descriptionSpa" type="text"
+                                pInputText />
+                        </span>
+                        <app-validation-input [formGroup]="datosForm" formInputName="descriptionSpa"
+                            [validation_messages]="validations"></app-validation-input>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <p-footer>
+            <button pButton pRipple type="button" [disabled]="!datosForm.valid" (click)="saveSintoma(form)"
+                label="Guardar" class="p-mr-2 p-mb-2"></button>
+            <button pButton pRipple type="button" (click)="display = false" label="Cancelar"
+                class="p-button-danger p-mr-2 p-mb-2"></button>
+        </p-footer>
+    </p-dialog>
+</div>

@@ -1,0 +1,96 @@
+<form [formGroup]="dolarForm" class="ui-g-12">
+    <div style="line-height: 1.5">
+        <div class="p-fluid p-formgrid p-grid">
+            <div class="p-field p-col-12 p-md-2">
+                <label for="value">Precio del dolar (Moneda nacional): </label>
+                <!-- <input formControlName="value" name="value" id="value" type="text" pInputText disabled="true" /> -->
+                <p-inputNumber formControlName="value" [disabled]="true" inputId="value" mode="currency" currency="USD" locale="en-US"></p-inputNumber>
+            </div>
+            <div class="p-field p-col-12 p-md-2">
+                <span class="button">
+                    <button pButton pRipple type="button" (click)="updateDolarInfo()" label="Actualizar"
+                        class="p-mr-2 p-mb-2" pTooltip="Actualizar registro"></button>
+                </span>
+            </div>
+            <div class="p-field p-col-12 p-md-4">
+                <span class="informative">
+                    <label for="value" [textContent]="updateDolarInformation"></label>
+                </span>
+            </div>
+        </div>
+    </div>
+</form>
+
+
+<form [formGroup]="shippingForm" class="ui-g-12">
+    <div style="line-height: 1.5">
+        <div class="p-fluid p-formgrid p-grid">
+            <div class="p-field p-col-12 p-md-2">
+                <label for="value">Porcentaje de costo de embarque: </label>
+                <!-- <input formControlName="value" name="value" id="value" type="text" pInputText disabled="true" /> -->
+                <p-inputNumber formControlName="value" inputId="value" [disabled]="true" prefix="%" mode="decimal" [minFractionDigits]="2">
+                </p-inputNumber>
+            </div>
+            <div class="p-field p-col-12 p-md-2">
+                <span class="button">
+                    <button pButton pRipple type="button" (click)="updateCostInfo()" label="Actualizar"
+                        class="p-mr-2 p-mb-2" pTooltip="Actualizar registro"></button>
+                </span>
+            </div>
+            <div class="p-field p-col-12 p-md-4">
+                <span class="informative">
+                    <label for="value" [textContent]="updateCostInformation"></label>
+                </span>
+            </div>
+        </div>
+    </div>
+</form>
+
+<form [formGroup]="taxForm" class="ui-g-12">
+    <div style="line-height: 1.5">
+        <div class="p-fluid p-formgrid p-grid">
+            <div class="p-field p-col-12 p-md-2">
+                <label for="value">Porcentaje de IVA: </label>
+                <!-- <input formControlName="value" name="value" id="value" type="text" pInputText disabled="true" /> -->
+                <p-inputNumber formControlName="value" inputId="value" [disabled]="true" prefix="%" mode="decimal" [minFractionDigits]="2"></p-inputNumber>
+            </div>
+            <div class="p-field p-col-12 p-md-2">
+                <span class="button">
+                    <button pButton pRipple type="button" (click)="updateTaxInfo()" label="Actualizar"
+                        class="p-mr-2 p-mb-2" pTooltip="Actualizar registro"></button>
+                </span>
+            </div>
+            <div class="p-field p-col-12 p-md-4">
+                <span class="informative">
+                    <label for="value" [textContent]="updateTaxInformation"></label>
+                </span>
+            </div>
+        </div>
+    </div>
+</form>
+
+
+<p-dialog header="{{ title }}" [(visible)]="display" [modal]="true" [style]="{ width: '550px' }" appendToBody="true"
+    [contentStyle]="{'overflow':'visible'}">
+    <form [formGroup]="datosForm" class="ui-g-12">
+        <div style="line-height: 1.5">
+            <div class="p-fluid p-formgrid p-grid">
+                <div class="p-field p-col-12 p-md-6">
+                    <span class="md-inputfield">
+                        <label for="value" [textContent]="labelText"></label>
+                        <input formControlName="value" name="value" id="value" type="number" pInputText />
+                        <app-validation-input [formGroup]="datosForm" formInputName="value"
+                            [validation_messages]="validations">
+                        </app-validation-input>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </form>
+    <p-footer>
+        <button pButton pRipple type="button" [disabled]="!datosForm.valid" (click)="saveValue()" label="Guardar"
+            class="p-mr-2 p-mb-2"></button>
+        <button pButton pRipple type="button" (click)="display = false" label="Cancelar"
+            class="p-button-danger p-mr-2 p-mb-2" pTooltip="Actualizar registro"></button>
+    </p-footer>
+</p-dialog>

@@ -1,0 +1,59 @@
+<div class="main-container">
+    <div class="container">
+        <p class="title">Consulta Montos Aprobados</p>
+        <div class="card">
+          <p-table #dt [columns]="heardes" [value]="data" styleClass="p-datatable-sm p-datatable-striped" 
+          [responsive]="true" responsiveLayout="stack" [loading]="loading"
+          [rows]="10" [paginator]="true" [pageLinks]="5"
+          [globalFilterFields]="['vin', 'claim']">
+            <ng-template pTemplate="caption">
+                <div class="p-d-flex p-flex-column p-flex-md-row p-jc-md-between table-header">
+                    <span>
+                        <i class="pi pi-search"></i>
+                        <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')"
+                        placeholder="Buscar periodo" />
+                    </span>
+                </div>
+            </ng-template>
+            <ng-template pTemplate="header">
+              <tr styleClass="p-mr-2">
+                <th *ngFor="let item of heardes">
+                  {{ item.label }}
+                </th>
+              </tr>
+            </ng-template>
+    
+            <ng-template pTemplate="body" let-approved>
+              <tr [pSelectableRow]="approved">
+                <td>
+                  <span>{{ approved.claim }}</span>
+                </td>
+                <td>
+                  <span>${{ approved.amount }}</span>
+                </td>
+                <td>
+                  <span>{{ approved.vin }}</span>
+                </td>
+                <td>
+                  <span>{{ approved.dateIni }}</span>
+                </td>
+                <td>
+                  <span>{{ approved.status }}</span>
+                </td>
+                <td>
+                  <span>{{ approved.period }}</span>
+                </td>
+              </tr>
+            </ng-template>
+    
+            <ng-template pTemplate="emptymessage">
+              <tr>
+                <td>
+                  No se encontraron registros.
+                </td>
+              </tr>
+            </ng-template>
+          </p-table>
+        </div>
+    </div>
+</div>

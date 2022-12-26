@@ -1,0 +1,269 @@
+<p-toast key="tst" position="top-right"></p-toast>
+<p class="title">Configuración Regional</p>
+<p-tabView>
+    <p-tabPanel header="Estados">
+        <div class="container">
+            <div class="p-col-12">
+                <div class="card">
+                <p-table #dt [columns]="stateHeader" [value]="stateData" 
+                    [rows]="10" [pageLinks]="5" styleClass="p-datatable-sm p-datatable-striped"
+                    [paginator]="true" [responsive]="true" responsiveLayout="stack" [loading]="loadingState">
+                    <ng-template pTemplate="caption">
+                        <div class="p-d-flex p-flex-column p-flex-md-row p-jc-md-between table-header">
+                            <div class="p-field p-col-2">
+                                <button pButton pRipple type="button" (click)="addSite('state')" label="&nbsp; Agregar"
+                                    class="p-button-rounded" pTooltip="Agregar registro">
+                                    <i class="fas fa-plus"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </ng-template>
+                    <ng-template pTemplate="header">
+                        <tr styleClass="p-mr-2">
+                            <th *ngFor="let item of stateHeader">
+                            {{item.label}}
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-sites>
+                        <tr [pSelectableRow]="periods">
+                            <td>
+                                <span>{{ sites.number }}</span>
+                            </td>
+                            <td>
+                                <span>{{ sites.name }}</span>
+                            </td>
+                            <td>
+                                <span>
+                                  <p-inputSwitch pTooltip="Actualizar estatus" [(ngModel)]="sites.status" (onChange)="updateSite(sites, 'state')"></p-inputSwitch>
+                                </span>
+                              </td>
+                            <td>
+                                <span>
+                                    <button pButton pRipple type="button" pTooltip="Actualizar registro" (click)="editSite('state', sites)"
+                                    class="p-button-rounded p-button-warning p-mr-2 p-mb-2" icon="pi pi-pencil"></button>
+                                </span>
+                            </td>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="emptymessage">
+                    <tr>
+                        <td colspan="6">
+                        No se encontraron registros.
+                        </td>
+                    </tr>
+                    </ng-template>
+                </p-table>
+                </div>
+            </div>
+        </div>
+    </p-tabPanel>
+    <p-tabPanel header="Municipios">
+        <div class="container">
+            <div class="p-col-12">
+                <div class="card">
+                <p-table #dt [columns]="townshipHeader" [value]="townshipData"
+                    [rows]="10" [pageLinks]="5" styleClass="p-datatable-sm p-datatable-striped"
+                    [paginator]="true" [responsive]="true" responsiveLayout="stack" [loading]="loadingTownship">
+                    <ng-template pTemplate="caption">
+                        <div class="p-d-flex p-flex-column p-flex-md-row p-jc-md-between table-header">
+                            <div class="p-field p-col-2">
+                                <button pButton pRipple type="button" (click)="addSite('township')" label="&nbsp; Agregar"
+                                    class="p-button-rounded p-mr-2 p-mb-2" pTooltip="Agregar registro">
+                                    <i class="fas fa-plus"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </ng-template>
+                    <ng-template pTemplate="header">
+                    <tr styleClass="p-mr-2">
+                        <th *ngFor="let item of townshipHeader">
+                            {{item.label}}
+                        </th>
+                    </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-sites>
+                        <tr [pSelectableRow]="periods">
+                            <td>
+                                <span>{{ sites.number }}</span>
+                            </td>
+                            <td>
+                                <span>{{ sites.name }}</span>
+                            </td>
+                            <td>
+                                <span>
+                                  <p-inputSwitch pTooltip="Actualizar estatus" [(ngModel)]="sites.status" (onChange)="updateSite(sites, 'township')"></p-inputSwitch>
+                                </span>
+                              </td>
+                            <td>
+                                <span>
+                                    <button pButton pRipple type="button" (click)="editSite('township', sites)" pTooltip="Actualizar registro"
+                                    class="p-button-rounded p-button-warning p-mr-2 p-mb-2" icon="pi pi-pencil"></button>
+                                </span>
+                            </td>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="emptymessage">
+                    <tr>
+                        <td colspan="6">
+                        No se encontraron registros.
+                        </td>
+                    </tr>
+                    </ng-template>
+                </p-table>
+                </div>
+            </div>
+        </div>
+    </p-tabPanel>
+    <p-tabPanel header="Región">
+        <div class="container">
+            <div class="p-col-12">
+                <div class="card">
+                <p-table #dt [columns]="areaHeader" [value]="areaData" 
+                    [rows]="10" [pageLinks]="5" styleClass="p-datatable-sm p-datatable-striped"
+                    [paginator]="true" [responsive]="true" responsiveLayout="stack" [loading]="loadingArea">
+                    <ng-template pTemplate="caption">
+                        <div class="p-d-flex p-flex-column p-flex-md-row p-jc-md-between table-header">
+                            <div class="p-field p-col-2">
+                                <button pButton pRipple type="button" (click)="addSite('area')" label="&nbsp; Agregar"
+                                    class="p-button-rounded p-mr-2 p-mb-2" pTooltip="Guardar registro">
+                                    <i class="fas fa-plus"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </ng-template>
+                    <ng-template pTemplate="header">
+                    <tr styleClass="p-mr-2">
+                        <th *ngFor="let item of areaHeader">
+                            {{item.label}}
+                        </th>
+                    </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-sites>
+                        <tr [pSelectableRow]="periods">
+                            <td>
+                                <span>{{ sites.number }}</span>
+                            </td>
+                            <td>
+                                <span>{{ sites.name }}</span>
+                            </td>
+                            <td>
+                              <span>
+                                <p-inputSwitch pTooltip="Actualizar estatus" [(ngModel)]="sites.status" (onChange)="updateSite(sites, 'area')"></p-inputSwitch>
+                              </span>
+                            </td>
+                            <td>
+                                <span>
+                                    <button pButton pRipple type="button" pTooltip="Actualizar registro" (click)="editSite('area', sites)"
+                                    class="p-button-rounded p-button-warning p-mr-2 p-mb-2" icon="pi pi-pencil"></button>
+                                </span>
+                            </td>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="emptymessage">
+                    <tr>
+                        <td colspan="6">
+                        No se encontraron registros.
+                        </td>
+                    </tr>
+                    </ng-template>
+                </p-table>
+                </div>
+            </div>
+        </div>
+    </p-tabPanel>
+    <p-tabPanel header="Grupo">
+        <div class="container">
+            <div class="p-col-12">
+                <div class="card">
+                <p-table #dt [columns]="groupHeader" [value]="groupData" [loading]="loadingGroup" 
+                    [rows]="10" [pageLinks]="5" styleClass="p-datatable-sm p-datatable-striped"
+                    [responsive]="true" responsiveLayout="stack" [paginator]="true">
+                    <ng-template pTemplate="caption">
+                        <div class="p-d-flex p-flex-column p-flex-md-row p-jc-md-between table-header">
+                            <div class="p-field p-col-2">
+                                <button pButton pRipple type="button" (click)="addSite('group')" label="&nbsp; Agregar"
+                                    class="p-button-rounded p-mr-2 p-mb-2" pTooltip="Agregar registro">
+                                    <i class="fas fa-plus"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </ng-template>
+                    <ng-template pTemplate="header">
+                    <tr styleClass="p-mr-2">
+                        <th *ngFor="let item of groupHeader">
+                            {{item.label}}
+                        </th>
+                    </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-sites>
+                        <tr [pSelectableRow]="periods">
+                            <td>
+                                <span>{{ sites.number }}</span>
+                            </td>
+                            <td>
+                                <span>{{ sites.name }}</span>
+                            </td>
+                            <td>
+                                <span>
+                                  <p-inputSwitch pTooltip="Actualizar estatus" [(ngModel)]="sites.status" (onChange)="updateSite(sites, 'group')"></p-inputSwitch>
+                                </span>
+                              </td>
+                            <td>
+                                <span>
+                                    <button pButton pRipple type="button" pTooltip="Actualizar registro" (click)="editSite('group', sites)"
+                                    class="p-button-rounded p-button-warning p-mr-2 p-mb-2" icon="pi pi-pencil"></button>
+                                </span>
+                            </td>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="emptymessage">
+                    <tr>
+                        <td colspan="6">
+                        No se encontraron registros.
+                        </td>
+                    </tr>
+                    </ng-template>
+                </p-table>
+                </div>
+            </div>
+        </div>
+     </p-tabPanel>
+</p-tabView>
+<p-dialog header="{{title}}" [(visible)]="display" [modal]="true" [style]="{ width: '800px'}" appendToBody="true">
+    <form class="ui-g-12" [formGroup]="datosForm">
+        <div style="line-height: 1.5">
+            <div class="p-fluid p-formgrid p-grid">
+                <div class="p-field p-col-12 p-md-4" *ngIf="hiddenStateDrown">
+                    <label for="state">Estado *</label>
+                    <span>
+                        <p-dropdown formControlName="state" [options]="stateDrown"
+                            optionLabel="label" name="selectState" id="state" appendTo="body"
+                            placeholder="Seleccionar Estado"
+                            [style]="{ width: '100%' }" [showClear]="false">
+                        </p-dropdown>
+                    </span>
+                </div>
+                <div class="p-field p-col-12 p-md-6">
+                    <label for="name">{{inputName}} *</label>
+                    <span>
+                        <i class="fab fa-slack-hash"></i>
+                        <input formControlName="name" name="name" id="name" type="text"
+                            pInputText />
+                    </span>
+                </div>
+                <div class="p-field p-col-12 p-md-2">
+                    <label for="name">Estatus *</label>
+                    <span>
+                        <p-inputSwitch formControlName="status"></p-inputSwitch>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </form>
+    <p-footer>
+        <button pButton pRipple type="button" [disabled]="!datosForm.valid" (click)="saveSite()" label="Guardar"
+            class="p-mr-2 p-mb-2" pTooltip="Guardar registro"></button>
+        <button pButton pRipple type="button" (click)="display = false" label="Cancelar"
+            class="p-button-danger p-mr-2 p-mb-2" pTooltip="Cancelar registro"></button>
+    </p-footer>
+</p-dialog>

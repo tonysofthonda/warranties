@@ -1,0 +1,35 @@
+export class WarrantyConsult {
+	id ?: number;
+    claimNo: string;
+	serviceNo: string;
+	clientName: string;
+	dateCreate: string;
+	dealerNo: string;
+	dealerId: string;
+	report: string;
+	model: string;
+	dealerName: string;
+	vin: string;
+	motor: string;
+	sale: string;
+	fail: string;
+	repair: string;
+	km: string;
+	causalPart: string;
+	descriptionPart: string;
+	reportSymptom: string;
+	descriptionDefect: string;
+	code: string;
+	frt: string;
+	amountPesos: string;
+	usd: string;
+	spareparts: string;
+	unship: string;
+	labor: string;
+	responseDate: string;
+	status: string;
+	close: string;
+	samples: string;
+	note: string;
+	comments: string;
+}

@@ -1,0 +1,745 @@
+<p-blockUI [blocked]="blockedDocument">
+    <i class="pi pi-spin pi-spinner" style="font-size: 2rem"></i>
+</p-blockUI>
+
+<p-toast key="tst"></p-toast>
+<p class="title">Crear Servicio</p>
+<p-card>
+    <!-- Acordion inicial al crear, ningun parametro -->
+    <div class="content-container" *ngIf="true; else elseBlock">
+        <p-accordion [multiple]="true">
+            <p-accordionTab header="INFORMACIÓN DE REPORTE" [selected]="true">
+                <form class="ui-g-12" [formGroup]="infoReportForm" *ngIf="infoReportForm">
+                    <div class="p-grid p-fluid">
+                        <div class="p-field p-col-12 p-md-3">
+                            <label for="serviceNumber">Número De Orden De Servicio: *</label>
+                            <div class="p-inputgroup">
+                                <span class="p-inputgroup-addon"><i class="pi pi-hashtag"></i></span>
+                                <input formControlName="serviceNumber" name="serviceNumber" id="serviceNumber" type="text"
+                                    placeholder="Número de orden" pInputText />
+                            </div>
+                            <app-validation-input [formGroup]="infoReportForm" formInputName="serviceNumber"
+                                [validation_messages]="validations">
+                            </app-validation-input>
+                        </div>
+                        <div class="p-field p-col-12 p-md-4">
+                            <label for="dateCreated">Fecha De Creación De Registro: </label>
+                            <span>
+                                <i class="pi pi-calendar-plus"></i>
+                                <p-calendar formControlName="dateCreated" [showIcon]="true" inputId="icon"
+                                    dateFormat="dd/mm/yy"></p-calendar>
+                            </span>
+                            <app-validation-input [formGroup]="infoReportForm" formInputName="dateCreated"
+                                [validation_messages]="validations"></app-validation-input>
+                        </div>
+                        <div class="p-field p-col-12 p-md-4">
+                            <label for="status">Estatus: </label>
+                            <span>
+                                <input formControlName="status" name="status" id="status" type="text"
+                                    pInputText />
+                            </span>
+                            <app-validation-input [formGroup]="infoReportForm" formInputName="status"
+                                [validation_messages]="validations"></app-validation-input>
+                        </div>
+
+                    </div>
+                </form>
+            </p-accordionTab>
+    
+            <p-accordionTab header="INFORMACIÓN DEL DISTRIBUIDOR" [selected]="true">
+                <form class="ui-g-12" [formGroup]="infoDealerForm" *ngIf="infoDealerForm">
+                    <div style="line-height: 1.5">
+                        <div class="p-fluid p-formgrid p-grid">
+                            <div class="p-field p-col-12 p-md-4">
+                                <label for="dealerNumber">Número de Distribuidor: *</label>
+                                <span>
+                                    <input formControlName="dealerNumber" name="dealerNumber" id="dealerNumber" type="text"
+                                        pInputText />
+                                </span>
+                                <app-validation-input [formGroup]="infoDealerForm" formInputName="dealerNumber"
+                                    [validation_messages]="validations"></app-validation-input>
+                            </div>
+                            <div class="p-field p-col-12 p-md-4">
+                                <label for="dealerName">Nombre de Distribuidor: *</label>
+                                <span>
+                                    <input formControlName="dealerName" name="dealerName" id="dealerName" type="text"
+                                        pInputText />
+                                </span>
+                                <app-validation-input [formGroup]="infoDealerForm" formInputName="dealerName"
+                                    [validation_messages]="validations"></app-validation-input>
+                            </div>
+                            <div class="p-field p-col-12 p-md-4">
+                                <label for="createReportBy">Reporte Elaborado Por: *</label>
+                                <span>
+                                    <input formControlName="createReportBy" name="createReportBy" id="createReportBy"
+                                        type="text" pInputText />
+                                </span>
+                                <app-validation-input [formGroup]="infoDealerForm" formInputName="createReportBy"
+                                    [validation_messages]="validations"></app-validation-input>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </p-accordionTab>
+    
+            <p-accordionTab header="INFORMACIÓN DE CLIENTE" [selected]="true">
+                <form class="ui-g-12" [formGroup]="infoClientForm" *ngIf="infoClientForm">
+                    <div class="p-grid p-fluid">
+                        <div class="p-field p-col-12 p-md-4">
+                            <label for="clientName">Nombre: *</label>
+                            <span>
+                                <input formControlName="clientName" name="clientName" id="clientName" type="text"
+                                    pInputText />
+                            </span>
+                            <app-validation-input [formGroup]="infoClientForm" formInputName="clientName"
+                                [validation_messages]="validations"></app-validation-input>
+                        </div>
+                        <div class="p-field p-col-12 p-md-4">
+                            <label for="phone">Teléfono: *</label>
+                            <span>
+                                <input formControlName="phone" name="phone" id="phone" type="text" pInputText />
+                            </span>
+                            <app-validation-input [formGroup]="infoClientForm" formInputName="phone"
+                                [validation_messages]="validations"></app-validation-input>
+                        </div>
+                        <div class="p-field p-col-12 p-md-4">
+                            <label for="email">Correo: *</label>
+                            <span>
+                                <input formControlName="email" name="email" id="email" type="text" pInputText />
+                            </span>
+                            <app-validation-input [formGroup]="infoClientForm" formInputName="email"
+                                [validation_messages]="validations"></app-validation-input>
+                        </div>
+                        <div class="p-field p-col-12 p-md-8">
+                            <label for="address">Domicilio: *</label>
+                            <span>
+                                <input formControlName="address" name="address" id="address" type="text" pInputText />
+                            </span>
+                            <app-validation-input [formGroup]="infoClientForm" formInputName="address"
+                                [validation_messages]="validations"></app-validation-input>
+                        </div>
+                    </div>
+                </form>
+            </p-accordionTab>
+    
+            <p-accordionTab header="INFORMACIÓN DE LA UNIDAD MOVÍL" [selected]="true">
+                <form class="ui-g-12" [formGroup]="infoMobileUnitForm" *ngIf="infoMobileUnitForm">
+                    <div style="line-height: 1.5">
+                        <div class="p-fluid p-formgrid p-grid">
+                            <div class="p-field p-col-12 p-md-4">
+                                <label for="vin">Número de VIN: *</label>
+                                <span>
+                                    <div class="p-inputgroup">
+                                        <input formControlName="vin" name="vin" id="vin" type="text" pInputText
+                                            placeholder="Numero de VIN">
+                                        <button type="button" pButton pRipple label="Buscar" (click)="searchVin()"></button>
+                                    </div>
+                                </span>
+                                <app-validation-input [formGroup]="infoMobileUnitForm" formInputName="vin"
+                                    [validation_messages]="validations"></app-validation-input>
+                            </div>
+                            <div class="p-field p-col-12 p-md-4">
+                                <label for="model">Modelo: </label>
+                                <span>
+                                    <p-dropdown formControlName="model" [options]="modelDrown" optionLabel="label"
+                                        name="model" id="model" appendTo="body" placeholder="Selecciona un modelo..."
+                                        [style]="{ width: '100%' }" [showClear]="false">
+                                    </p-dropdown>
+                                </span>
+                                <app-validation-input [formGroup]="infoMobileUnitForm" formInputName="model"
+                                    [validation_messages]="validations"></app-validation-input>
+                            </div>
+                            <div class="p-field p-col-12 p-md-4">
+                                <label for="engineSeries">Serie de Motor: </label>
+                                <span>
+                                    <input formControlName="engineSeries" name="engineSeries" id="engineSeries" type="text"
+                                        pInputText />
+                                </span>
+                                <app-validation-input [formGroup]="infoMobileUnitForm" formInputName="engineSeries"
+                                    [validation_messages]="validations"></app-validation-input>
+                            </div>
+                            <div class="p-field p-col-12 p-md-4">
+                                <label for="year">Año: </label>
+                                <span>
+                                    <input formControlName="year" name="year" id="year" type="text" pInputText />
+                                </span>
+                                <app-validation-input [formGroup]="infoMobileUnitForm" formInputName="year"
+                                    [validation_messages]="validations"></app-validation-input>
+                            </div>
+                            <div class="p-field p-col-12 p-md-4">
+                                <label for="color">Color: </label>
+                                <span>
+                                    <input formControlName="color" name="color" id="color" type="text" pInputText />
+                                </span>
+                                <app-validation-input [formGroup]="infoMobileUnitForm" formInputName="color"
+                                    [validation_messages]="validations"></app-validation-input>
+                            </div>
+                            <div class="p-field p-col-12 p-md-4">
+                                <label for="saleDate">Fecha de Venta: </label>
+                                <span>
+                                    <span>
+                                        <p-calendar formControlName="saleDate" [showIcon]="true" inputId="icon"
+                                            dateFormat="yy-mm-dd"></p-calendar>
+                                    </span>
+                                </span>
+                                <app-validation-input [formGroup]="infoMobileUnitForm" formInputName="saleDate"
+                                    [validation_messages]="validations"></app-validation-input>
+                            </div>
+                            <div class="p-field p-col-12 p-md-4">
+                                <label for="soldBy">Vendido Por: </label>
+                                <span>
+                                    <input formControlName="soldBy" name="soldBy" id="soldBy" type="text" pInputText />
+                                </span>
+                                <app-validation-input [formGroup]="infoMobileUnitForm" formInputName="soldBy"
+                                    [validation_messages]="validations"></app-validation-input>
+                            </div>
+                            <div class="p-field p-col-12 p-md-4">
+                                <label for="owner">Propietario: </label>
+                                <span>
+                                    <input formControlName="owner" name="owner" id="owner" type="text" pInputText />
+                                </span>
+                                <app-validation-input [formGroup]="infoMobileUnitForm" formInputName="owner"
+                                    [validation_messages]="validations"></app-validation-input>
+                            </div>
+    
+                        </div>
+                    </div>
+                </form>
+            </p-accordionTab>
+    
+            <p-accordionTab header="INFORMACIÓN DEL SERVICIO" [selected]="true">
+                <form class="ui-g-12" [formGroup]="serviceDetailForm" *ngIf="serviceDetailForm">
+                    <div style="line-height: 1.5">
+                        <div class="p-fluid p-formgrid p-grid">
+                           
+                            <div class="p-field p-col-12 p-md-4">
+                                <label for="dateAdmission">Fecha de Ingreso: *</label>
+                                <span>
+                                    <p-calendar formControlName="dateAdmission" (onSelect)="selectDateIn($event)" [minDate]="minDate" [showIcon]="true" inputId="icon"
+                                        dateFormat="dd/mm/yy"></p-calendar>
+                                </span>
+                                <app-validation-input [formGroup]="serviceDetailForm" formInputName="dateAdmission"
+                                    [validation_messages]="validations"></app-validation-input>
+                            </div>
+    
+                            <div class="p-field p-col-12 p-md-4">
+                                <label for="departureDate">Fecha de Salida: *</label>
+                                <span>
+                                    <p-calendar formControlName="departureDate" [minDate]="minDateOut" [showIcon]="true" inputId="icon"
+                                        dateFormat="dd/mm/yy"></p-calendar>
+                                </span>
+                                <app-validation-input [formGroup]="serviceDetailForm" formInputName="departureDate"
+                                    [validation_messages]="validations"></app-validation-input>
+                            </div>
+                            
+                            <div class="p-field p-col-12 p-md-4">
+                                <label for="mileage">Kilometraje: *</label>
+                                <span>
+                                    <input formControlName="mileage" name="mileage" id="mileage" type="text" pInputText />
+                                </span>
+                                <app-validation-input [formGroup]="serviceDetailForm" formInputName="mileage"
+                                    [validation_messages]="validations"></app-validation-input>
+                            </div>
+
+                            <div class="p-field p-col-12 p-md-4">
+                                <label for="orderType">Tipo de Orden: *</label>
+                                <span>
+                                    <p-dropdown formControlName="orderType" [options]="orderDrown" optionLabel="label"
+                                        name="orderType" id="orderType" appendTo="body" placeholder="Selecciona un tipo de orden..."
+                                        [style]="{ width: '100%' }" [showClear]="false" (onChange)="onChangeOrder()">
+                                    </p-dropdown>
+                                </span>
+                                <app-validation-input [formGroup]="serviceDetailForm" formInputName="orderType"
+                                    [validation_messages]="validations"></app-validation-input>
+                            </div>
+
+                            <div class="p-field p-col-12 p-md-4">
+                                <label for="workType">Tipo de Trabajo: *</label>
+                                <span>
+                                    <p-dropdown formControlName="workType" [options]="workDrown" optionLabel="label"
+                                        name="workType" id="workType" appendTo="body" placeholder="Selecciona un tipo de trabajo..."
+                                        [style]="{ width: '100%' }" [showClear]="false" (onChange)="onChangeWork()">
+                                    </p-dropdown>
+                                </span>
+                                <app-validation-input [formGroup]="serviceDetailForm" formInputName="workType"
+                                    [validation_messages]="validations"></app-validation-input>
+                            </div>
+
+                            <div class="p-field p-col-12 p-md-4">
+                                <label for="detail">Detalle:</label>
+                                <span>
+                                    <input formControlName="detail" name="detail" id="detail" type="text" pInputText />
+                                </span>
+                                <app-validation-input [formGroup]="serviceDetailForm" formInputName="detail"
+                                    [validation_messages]="validations"></app-validation-input>
+                            </div>
+
+                            <div class="p-field p-col-12 p-md-12">
+                                <label for="description">Descripción: *</label>
+                                <span>
+                                    <input formControlName="description" name="description" id="description" type="text" pInputText />
+                                </span>
+                                <app-validation-input [formGroup]="serviceDetailForm" formInputName="description"
+                                    [validation_messages]="validations"></app-validation-input>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </p-accordionTab>
+
+            <p-accordionTab *ngIf="isEdit" header="RELACIÓN DE PARTES" [selected]="isEdit" [disabled]="!isEdit">
+                <div class="p-d-flex p-flex-column p-flex-md-row p-jc-md-between table-header">
+                    <div class="p-field p-col-2">
+                        <button pButton pRipple type="button" label="&nbsp; Agregar" (click)="addPart()"
+                            class="p-button-rounded">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                    </div>
+                </div>
+                <p-table #dt [columns]="heardes" [value]="" styleClass="p-datatable-sm p-datatable-striped" 
+                    [responsive]="true" responsiveLayout="stack" [loading]=""
+                    [rows]="10" [paginator]="true" [pageLinks]="5" >
+                    <ng-template pTemplate="header">
+                        <tr styleClass="p-mr-2">
+                            <th *ngFor="let item of heardes" pSortableColumn="codigo">
+                                {{item.label}}
+                            </th>
+                        </tr>
+                    </ng-template>
+    
+                    <ng-template pTemplate="body" let-partsReplaced>
+                        <tr [pSelectableRow]="partsReplaced">
+    
+                            <td>
+                                <span>{{ partsReplaced.part.partNumber }}</span>
+                            </td>
+    
+                            <td>
+                                <span>{{ partsReplaced.quantity }}</span>
+                            </td>
+    
+                            <td>
+                                <span>{{ partsReplaced.description }}</span>
+                            </td>
+    
+                            <td>
+                                <span>{{ partsReplaced.unitCost | currency:'USD' }}</span>
+                            </td>
+    
+                            <td>
+                                <span>{{ partsReplaced.packingCost }}</span>
+                            </td>
+    
+                            <td>
+                                <span>{{ partsReplaced.total | currency:'USD' }}</span>
+                            </td>
+    
+                            <td *ngIf="this.stepService.warrantyInformation.status === 'Draft' || !this.stepService.warrantyInformation.status">
+                                <span>
+                                    <button pButton pRipple type="button" (click)="editPart(partsReplaced)"
+                                        class="p-button-rounded p-button-warning p-mr-2 p-mb-2"
+                                        icon="pi pi-pencil" pTooltip="Editar regisro"></button>
+                                </span>
+    
+                                <span>
+                                    <button pButton pRipple type="button" (click)="deleteInformation(partsReplaced)"
+                                        class="p-button-rounded p-button-danger p-mr-2 p-mb-2"
+                                        icon="pi pi-trash" pTooltip="Eliminar registro"></button>
+                                </span>
+    
+                            </td>
+                        </tr>
+                    </ng-template>
+    
+                    <ng-template pTemplate="emptymessage">
+                        <tr>
+                            <td colspan="5">
+                                No se encontraron registros.
+                            </td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+            </p-accordionTab>
+    
+        </p-accordion>
+
+        <div>
+            <p-button label="Eliminar" class="p-mr-2 p-mb-2" [style]="{'margin-left': '.5em'}" (onClick)="deleteService()"></p-button>
+            <p-button label="Cancelar" class="p-mr-2 p-mb-2" styleClass="p-button-danger"  [style]="{'margin-left': '.5em'}" (onClick)="cancelService()"></p-button>
+            <p-button [disabled]="!(infoClientForm.valid && infoMobileUnitForm.valid && serviceDetailForm.valid)" 
+            label="Guardar" class="p-mr-2 p-mb-2" [style]="{'margin-left': '.5em'}" (onClick)="saveService()"></p-button>
+        </div>
+        
+    </div>
+    <ng-template #elseBlock>
+        <p-accordion [multiple]="true">
+            <p-accordionTab header="INFORMACIÓN DE REPORTE" [selected]="true">
+                <form class="ui-g-12" [formGroup]="infoReportForm" *ngIf="infoReportForm">
+                    <div class="p-grid p-fluid">
+                        <div class="p-field p-col-12 p-md-3">
+                            <label for="serviceNumber">Número de Orden de Servicio:</label>
+                            <div class="p-inputgroup">
+                                <span class="p-inputgroup-addon"><i class="pi pi-hashtag"></i></span>
+                                <input formControlName="serviceNumber" name="serviceNumber" id="serviceNumber" type="text"
+                                    placeholder="Número de orden" [(ngModel)]="serviceNumberModel"
+                                    (ngModelChange)="serviceOrderNumberChange()" pInputText />
+                            </div>
+                            <app-validation-input [formGroup]="infoReportForm" formInputName="serviceNumber"
+                                [validation_messages]="validations">
+                            </app-validation-input>
+                        </div>
+                        <div class="p-field p-col-12 p-md-4">
+                            <label for="dateCreated">Fecha de Creación de Registro: *</label>
+                            <span>
+                                <i class="pi pi-calendar-plus"></i>
+                                <p-calendar formControlName="dateCreated" [showIcon]="true" inputId="icon"
+                                    dateFormat="dd/mm/yy"></p-calendar>
+                            </span>
+                            <app-validation-input [formGroup]="infoReportForm" formInputName="dateCreated"
+                                [validation_messages]="validations"></app-validation-input>
+                        </div>
+                    </div>
+                </form>
+            </p-accordionTab>
+    
+            <p-accordionTab header="INFORMACIÓN DEL DISTRIBUIDOR" [selected]="true">
+                <form class="ui-g-12" [formGroup]="infoDealerForm" *ngIf="infoDealerForm">
+                    <div style="line-height: 1.5">
+                        <div class="p-fluid p-formgrid p-grid">
+                            <div class="p-field p-col-12 p-md-4">
+                                <label for="dealerNumber">Número De Distribuidor: *</label>
+                                <span>
+                                    <input formControlName="dealerNumber" name="dealerNumber" id="dealerNumber" type="text"
+                                        pInputText />
+                                </span>
+                                <app-validation-input [formGroup]="infoDealerForm" formInputName="dealerNumber"
+                                    [validation_messages]="validations"></app-validation-input>
+                            </div>
+                            <div class="p-field p-col-12 p-md-4">
+                                <label for="dealerName">Nombre De Distribuidor: *</label>
+                                <span>
+                                    <input formControlName="dealerName" name="dealerName" id="dealerName" type="text"
+                                        pInputText />
+                                </span>
+                                <app-validation-input [formGroup]="infoDealerForm" formInputName="dealerName"
+                                    [validation_messages]="validations"></app-validation-input>
+                            </div>
+                            <div class="p-field p-col-12 p-md-4">
+                                <label for="createReportBy">Reporte Elaborado Por: *</label>
+                                <span>
+                                    <input formControlName="createReportBy" name="createReportBy" id="createReportBy"
+                                        type="text" pInputText />
+                                </span>
+                                <app-validation-input [formGroup]="infoDealerForm" formInputName="createReportBy"
+                                    [validation_messages]="validations"></app-validation-input>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </p-accordionTab>
+    
+            <p-accordionTab header="INFORMACIÓN DE CLIENTE" [selected]="isServiceNumber" [disabled]="!isServiceNumber">
+                <form class="ui-g-12" [formGroup]="infoClientForm" *ngIf="infoClientForm">
+                    <div class="p-grid p-fluid">
+                        <div class="p-field p-col-12 p-md-4">
+                            <label for="clientName">Nombre: *</label>
+                            <span>
+                                <input formControlName="clientName" name="clientName" id="clientName" type="text"
+                                    pInputText />
+                            </span>
+                            <app-validation-input [formGroup]="infoClientForm" formInputName="clientName"
+                                [validation_messages]="validations"></app-validation-input>
+                        </div>
+                        <div class="p-field p-col-12 p-md-4">
+                            <label for="phone">Teléfono: *</label>
+                            <span>
+                                <input formControlName="phone" name="phone" id="phone" type="text" pInputText />
+                            </span>
+                            <app-validation-input [formGroup]="infoClientForm" formInputName="phone"
+                                [validation_messages]="validations"></app-validation-input>
+                        </div>
+                        <div class="p-field p-col-12 p-md-4">
+                            <label for="email">Correo: *</label>
+                            <span>
+                                <input formControlName="email" name="email" id="email" type="text" pInputText />
+                            </span>
+                            <app-validation-input [formGroup]="infoClientForm" formInputName="email"
+                                [validation_messages]="validations"></app-validation-input>
+                        </div>
+                        <div class="p-field p-col-12 p-md-8">
+                            <label for="address">Domicilio: *</label>
+                            <span>
+                                <input formControlName="address" name="address" id="address" type="text" pInputText />
+                            </span>
+                            <app-validation-input [formGroup]="infoClientForm" formInputName="address"
+                                [validation_messages]="validations"></app-validation-input>
+                        </div>
+                    </div>
+                </form>
+            </p-accordionTab>
+    
+            <p-accordionTab header="INFORMACIÓN DE LA UNIDAD MOVÍL" [selected]="isServiceNumber"
+                [disabled]="!isServiceNumber">
+                <form class="ui-g-12" [formGroup]="infoMobileUnitForm" *ngIf="infoMobileUnitForm">
+                    <div style="line-height: 1.5">
+                        <div class="p-fluid p-formgrid p-grid">
+                            <div class="p-field p-col-12 p-md-4">
+                                <label for="vin">Número de vin: *</label>
+                                <span>
+                                    <div class="p-inputgroup">
+                                        <input formControlName="vin" name="vin" id="vin" type="text" pInputText
+                                            placeholder="Numero de VIN">
+                                        <button type="button" pButton pRipple label="Buscar" (click)="searchVin()"></button>
+                                    </div>
+                                </span>
+                                <app-validation-input [formGroup]="infoMobileUnitForm" formInputName="vin"
+                                    [validation_messages]="validations"></app-validation-input>
+                            </div>
+                            <div class="p-field p-col-12 p-md-4">
+                                <label for="model">Modelo: </label>
+                                <span>
+                                    <p-dropdown formControlName="model" [options]="modelDrown" optionLabel="label"
+                                        name="model" id="model" appendTo="body" placeholder="Seleccionar Modelo"
+                                        [style]="{ width: '100%' }" [showClear]="false">
+                                    </p-dropdown>
+                                </span>
+                                <app-validation-input [formGroup]="infoMobileUnitForm" formInputName="model"
+                                    [validation_messages]="validations"></app-validation-input>
+                            </div>
+                            <div class="p-field p-col-12 p-md-4">
+                                <label for="engineSeries">Serie de motor: </label>
+                                <span>
+                                    <input formControlName="engineSeries" name="engineSeries" id="engineSeries" type="text"
+                                        pInputText />
+                                </span>
+                                <app-validation-input [formGroup]="infoMobileUnitForm" formInputName="engineSeries"
+                                    [validation_messages]="validations"></app-validation-input>
+                            </div>
+                            <div class="p-field p-col-12 p-md-4">
+                                <label for="year">Año: </label>
+                                <span>
+                                    <input formControlName="year" name="year" id="year" type="text" pInputText />
+                                </span>
+                                <app-validation-input [formGroup]="infoMobileUnitForm" formInputName="year"
+                                    [validation_messages]="validations"></app-validation-input>
+                            </div>
+                            <div class="p-field p-col-12 p-md-4">
+                                <label for="color">Color: </label>
+                                <span>
+                                    <input formControlName="color" name="color" id="color" type="text" pInputText />
+                                </span>
+                                <app-validation-input [formGroup]="infoMobileUnitForm" formInputName="color"
+                                    [validation_messages]="validations"></app-validation-input>
+                            </div>
+                            <div class="p-field p-col-12 p-md-4">
+                                <label for="saleDate">Fecha de venta: </label>
+                                <span>
+                                    <span>
+                                        <p-calendar formControlName="saleDate" [showIcon]="true" inputId="icon"
+                                            dateFormat="yy-mm-dd"></p-calendar>
+                                    </span>
+                                </span>
+                                <app-validation-input [formGroup]="infoMobileUnitForm" formInputName="saleDate"
+                                    [validation_messages]="validations"></app-validation-input>
+                            </div>
+                            <div class="p-field p-col-12 p-md-4">
+                                <label for="soldBy">Vendido por: </label>
+                                <span>
+                                    <input formControlName="soldBy" name="soldBy" id="soldBy" type="text" pInputText />
+                                </span>
+                                <app-validation-input [formGroup]="infoMobileUnitForm" formInputName="soldBy"
+                                    [validation_messages]="validations"></app-validation-input>
+                            </div>
+                            <div class="p-field p-col-12 p-md-4">
+                                <label for="owner">Propietario: </label>
+                                <span>
+                                    <input formControlName="owner" name="owner" id="owner" type="text" pInputText />
+                                </span>
+                                <app-validation-input [formGroup]="infoMobileUnitForm" formInputName="owner"
+                                    [validation_messages]="validations"></app-validation-input>
+                            </div>
+    
+                        </div>
+                    </div>
+                </form>
+            </p-accordionTab>
+    
+            <p-accordionTab header="INFORMACIÓN DEL SERVICIO" [selected]="isServiceNumber" [disabled]="!isServiceNumber">
+                <form class="ui-g-12" [formGroup]="serviceDetailForm" *ngIf="serviceDetailForm">
+                    <div style="line-height: 1.5">
+                        <div class="p-fluid p-formgrid p-grid">
+                           
+                            <div class="p-field p-col-12 p-md-4">
+                                <label for="dateAdmission">Fecha de ingreso: *</label>
+                                <span>
+                                    <p-calendar formControlName="dateAdmission" [minDate]="minDate" [showIcon]="true" inputId="icon"
+                                        dateFormat="dd/mm/yy"></p-calendar>
+                                </span>
+                                <app-validation-input [formGroup]="serviceDetailForm" formInputName="dateAdmission"
+                                    [validation_messages]="validations"></app-validation-input>
+                            </div>
+    
+                            <div class="p-field p-col-12 p-md-4">
+                                <label for="departureDate">Fecha de salida: *</label>
+                                <span>
+                                    <p-calendar formControlName="departureDate" [minDate]="minDate" [showIcon]="true" inputId="icon"
+                                        dateFormat="dd/mm/yy"></p-calendar>
+                                </span>
+                                <app-validation-input [formGroup]="serviceDetailForm" formInputName="departureDate"
+                                    [validation_messages]="validations"></app-validation-input>
+                            </div>
+                            
+                            <div class="p-field p-col-12 p-md-4">
+                                <label for="mileage">Kilometraje: *</label>
+                                <span>
+                                    <input formControlName="mileage" name="mileage" id="mileage" type="text" pInputText />
+                                </span>
+                                <app-validation-input [formGroup]="serviceDetailForm" formInputName="mileage"
+                                    [validation_messages]="validations"></app-validation-input>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </p-accordionTab>
+    
+            <p-accordionTab header="RELACIÓN DE PARTES" [selected]="isServiceNumber" [disabled]="!isServiceNumber">
+                <div class="p-d-flex p-flex-column p-flex-md-row p-jc-md-between table-header">
+                    <div class="p-field p-col-2">
+                        <button pButton pRipple type="button" label="&nbsp; Agregar"
+                            class="p-button-rounded">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                    </div>
+                </div>
+                <p-table #dt [columns]="heardes" [value]="" styleClass="p-datatable-sm p-datatable-striped" 
+                    [responsive]="true" responsiveLayout="stack" [loading]=""
+                    [rows]="10" [paginator]="true" [pageLinks]="5" >
+                    <ng-template pTemplate="header">
+                        <tr styleClass="p-mr-2">
+                            <th *ngFor="let item of heardes" pSortableColumn="codigo">
+                                {{item.label}}
+                            </th>
+                        </tr>
+                    </ng-template>
+    
+                    <ng-template pTemplate="body" let-partsReplaced>
+                        <tr [pSelectableRow]="partsReplaced">
+    
+                            <td>
+                                <span>{{ partsReplaced.part.partNumber }}</span>
+                            </td>
+    
+                            <td>
+                                <span>{{ partsReplaced.quantity }}</span>
+                            </td>
+    
+                            <td>
+                                <span>{{ partsReplaced.description }}</span>
+                            </td>
+    
+                            <td>
+                                <span>{{ partsReplaced.unitCost | currency:'USD' }}</span>
+                            </td>
+    
+                            <td>
+                                <span>{{ partsReplaced.packingCost }}</span>
+                            </td>
+    
+                            <td>
+                                <span>{{ partsReplaced.total | currency:'USD' }}</span>
+                            </td>
+    
+                            <td *ngIf="this.stepService.warrantyInformation.status === 'Draft' || !this.stepService.warrantyInformation.status">
+                                <span>
+                                    <button pButton pRipple type="button" (click)="editPart(partsReplaced)"
+                                        class="p-button-rounded p-button-warning p-mr-2 p-mb-2"
+                                        icon="pi pi-pencil" pTooltip="Editar regisro"></button>
+                                </span>
+    
+                                <span>
+                                    <button pButton pRipple type="button" (click)="deleteInformation(partsReplaced)"
+                                        class="p-button-rounded p-button-danger p-mr-2 p-mb-2"
+                                        icon="pi pi-trash" pTooltip="Eliminar registro"></button>
+                                </span>
+    
+                            </td>
+                        </tr>
+                    </ng-template>
+    
+                    <ng-template pTemplate="emptymessage">
+                        <tr>
+                            <td colspan="5">
+                                No se encontraron registros.
+                            </td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+            </p-accordionTab>
+        </p-accordion>
+        <ng-template pTemplate="footer">
+            <button *ngIf="!isUpdateService"
+                [disabled]="!(infoClientForm.valid && infoMobileUnitForm.valid && serviceDetailForm.valid && infoReportForm.valid)"
+                pButton pRipple icon="pi pi-check" type="button" label="Guardar" pTooltip="Guardar registro"
+                class="p-button-success p-button-rounded p-mr-2 p-mb-2" (click)="saveCreateService()"></button>
+            <button *ngIf="isUpdateService"
+                [disabled]="!(infoClientForm.valid && infoMobileUnitForm.valid && serviceDetailForm.valid && infoReportForm.valid)"
+                pButton pRipple icon="pi pi-pencil" type="button" label="Actualizar" pTooltip="Actualizar registro"
+                class="p-button-success p-button-rounded p-mr-2 p-mb-2" (click)="updateService()"></button>
+        </ng-template>
+    </ng-template>
+    
+</p-card>
+
+<p-confirmDialog [style]="{width: '30vw'}" [baseZIndex]="10000" rejectButtonStyleClass="p-button-text"></p-confirmDialog>
+
+<p-dialog header="{{ title }}" [(visible)]="isVisibleDialog" [modal]="true" [style]="{ width: '800px' }" appendToBody="true">
+    <form [formGroup]="partForm" class="ui-g-12">
+        <div style="line-height: 1.5">
+            <div class="p-fluid p-formgrid p-grid">
+                <div class="p-field p-col-12 p-md-4">
+                    <label for="code">Número de parte *</label>
+                    <div class="p-inputgroup">
+                        <input formControlName="partNumber" name="partNumber" id="partNumber" type="text" pInputText
+                            placeholder="Número de parte">
+                        <button type="button" pButton pRipple label="Buscar"  (click)="searchPart($event)"></button>
+                    </div>
+                    <app-validation-input [formGroup]="partForm" formInputName="partNumber" [validation_messages]="validations"></app-validation-input>
+                </div>
+                <div class="p-field p-col-12 p-md-4">
+                    <label for="code">Cantidad *</label>
+                    <p-inputNumber formControlName="quantity" name="quantity" id="quantity" [showButtons]="true"
+                        [min]="1" [max]="100"></p-inputNumber>
+                    <app-validation-input [formGroup]="partForm" formInputName="quantity" [validation_messages]="validations"></app-validation-input>
+                </div>
+                <div class="p-field p-col-12 p-md-4">
+                    <label for="code">Tiempo labor *</label>
+                    <p-inputNumber formControlName="totalHours" name="totalHours" id="totalHours" mode="decimal"
+                        [min]="0" [showButtons]="true" [minFractionDigits]="1"></p-inputNumber>
+                    <app-validation-input [formGroup]="partForm" formInputName="totalHours" [validation_messages]="validations"></app-validation-input>
+                </div>
+                <div class="p-field p-col-12 p-md-4">
+                    <label for="code">Modelo</label>
+                    <input formControlName="model" name="model" id="model" pInputText>
+                    <app-validation-input [formGroup]="partForm" formInputName="model" [validation_messages]="validations"></app-validation-input>
+                </div>
+                <div class="p-field p-col-12 p-md-4">
+                    <label for="code">Descripción</label>
+                    <input formControlName="description" name="description" id="description" pInputText>
+                    <app-validation-input [formGroup]="partForm" formInputName="description" [validation_messages]="validations"></app-validation-input>
+                </div>
+                <div class="p-field p-col-12 p-md-4">
+                    <label for="code">Precio</label>
+                    <p-inputNumber formControlName="price" [showButtons]="true" mode="currency" name="price" id="price" currency="USD" step="0.1">
+                    </p-inputNumber>
+                    <app-validation-input [formGroup]="partForm" formInputName="price" [validation_messages]="validations"></app-validation-input>
+                </div>
+            </div>
+        </div>
+    </form>
+    <p-footer>
+        <button pButton pRipple type="button" [disabled]="!partForm.valid" label="Guardar"
+            class="p-mr-2 p-mb-2"></button>
+        <button pButton pRipple type="button" (click)="isVisibleDialog = false" label="Cancelar"
+            class="p-button-danger p-mr-2 p-mb-2"></button>
+    </p-footer>
+</p-dialog>

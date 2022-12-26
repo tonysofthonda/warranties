@@ -1,0 +1,254 @@
+<div class="main-container">
+    <div class="container">
+        <p class="title">Combinación de partes, defectos y síntomas</p>
+        <div class="layout-topbar-separator"></div>
+        <p-toast key="tst" position="top-right"></p-toast>
+        <div>
+            <div class="container">
+                <div class="p-col-12">
+                    <div class="card">
+                        <form [formGroup]="dataForm" class="ui-g-12">
+                            <div style="line-height: 1.5">
+                                <div class="p-fluid p-formgrid p-grid">
+                                    <div class="p-field p-col-12 p-md-3">
+                                        <label for="part">Parte *</label>
+                                        <span>
+                                            <div class="p-inputgroup" *ngIf="!showPart">
+                                                <button pButton pRipple type="button" class="p-button-primary"
+                                                    icon="pi pi-plus" (click)="addPart()"></button>
+                                                <p-dropdown formControlName="part" [options]="partDrown"
+                                                    [(ngModel)]="selectPart" optionLabel="label" name="selectPart"
+                                                    id="part" placeholder="Seleccionar Parte"
+                                                    [style]="{ width: '100%' }" [showClear]="true">
+                                                </p-dropdown>
+                                            </div>
+                                        </span>
+                                    </div>
+                                    <div class="p-field p-col-12 p-md-3">
+                                        <label for="defect">Defecto *</label>
+                                        <span>
+                                            <div class="p-inputgroup" *ngIf="!showDefect">
+                                                <button pButton pRipple type="button" class="p-button-primary"
+                                                    icon="pi pi-plus" (click)="addDefect()"></button>
+                                                <p-dropdown formControlName="defect" [options]="defectDrown"
+                                                    [(ngModel)]="selectDefect" optionLabel="label" name="selectDefect"
+                                                    id="defect" placeholder="Seleccionar Defecto"
+                                                    [style]="{ width: '100%' }" [showClear]="true">
+                                                </p-dropdown>
+                                            </div>
+                                        </span>
+                                    </div>
+                                    <div class="p-field p-col-12 p-md-3">
+                                        <label for="symptom">Síntoma *</label>
+                                        <span>
+                                            <div class="p-inputgroup" *ngIf="!showSymptom">
+                                                <button pButton pRipple type="button" class="p-button-primary"
+                                                    icon="pi pi-plus" (click)="addSymptom()"></button>
+                                                <p-dropdown formControlName="symptom" [options]="sympDrown"
+                                                    [(ngModel)]="selectSymptom" optionLabel="label" name="selectSymptom"
+                                                    id="symptom" placeholder="Seleccionar Síntoma"
+                                                    [style]="{ width: '100%' }" [showClear]="true">
+                                                </p-dropdown>
+                                            </div>
+                                        </span>
+                                    </div>
+                                    <div class="p-field p-col-12 p-md-3">
+                                        <span class="button">
+                                            <button pButton pRipple type="button" [disabled]="!dataForm.valid"(click)="addRelated()"
+                                                label="Combinar" class="p-mr-2 p-mb-2"></button>                                            
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        <p-table #dt [columns]="heardes" [value]="pds" [rows]="10" [pageLinks]="5" 
+                            [paginator]="true" [responsive]="true" responsiveLayout="stack" [loading]="loading"
+                            styleClass="p-datatable-sm p-datatable-striped"
+                            [globalFilterFields]="['partMotorcycle.partNameEnglish','defects.descriptionEng','symptom.descriptionEng','symptom.code' ]">
+                            <ng-template pTemplate="caption">
+                                <div class="p-d-flex p-flex-column p-flex-md-row p-jc-md-between table-header">
+                                    <span>
+                                        <i class="pi pi-search"></i>
+                                        <input pInputText type="text"
+                                            (input)="dt.filterGlobal($event.target.value, 'contains')"
+                                            placeholder="Buscar" />
+                                    </span>
+                                </div>
+                            </ng-template>
+                            <ng-template pTemplate="header">
+                                <tr styleClass="p-mr-2">
+                                    <th *ngFor="let item of heardes" pSortableColumn="codigo">
+                                        {{item.label}}
+                                    </th>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="body" let-pds>
+                                <tr [pSelectableRow]="pds">
+                                    <td>
+                                        <span>{{ pds.partMotorcycle.partNameEnglish }}</span>
+                                    </td>
+
+                                    <td>
+                                        <span>{{ pds.defects.descriptionEng }}</span>
+                                    </td>
+
+                                    <td>
+                                        <span>{{ pds.symptom.code }}</span>
+                                    </td>
+
+                                    <td>
+                                        <span>{{ pds.symptom.descriptionEng }}</span>
+                                    </td>
+
+                                    <td>
+                                        <span>
+                                            <p-inputSwitch [(ngModel)]="pds.status" pTooltip="Actualizar estatus"
+                                                (onChange)="updateStatus(pds)"></p-inputSwitch>
+                                        </span>
+                                    </td>
+
+                                    <td>
+                                        <span>
+                                            <button pButton pRipple type="button" (click)="editRelated(pds)"
+                                                class="p-button-rounded p-button-warning p-mr-2 p-mb-2"
+                                                icon="pi pi-pencil" pTooltip="Editar registro"></button>
+                                        </span>
+                                    </td>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="emptymessage">
+                                <tr>
+                                    <td colspan="4">
+                                        No se encontraron registros.
+                                    </td>
+                                </tr>
+                            </ng-template>
+                        </p-table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<p-dialog header="{{ title }}" [(visible)]="display" [modal]="true" [style]="{ width: '800px' }" appendToBody="true">
+    <form class="ui-g-12" [formGroup]="modalForm">
+        <div style="line-height: 1.5">
+            <div class="p-fluid p-formgrid p-grid">
+                <div class="p-field p-col-12 p-md-6" [hidden]="hiddenCode">
+                    <label for="code"> Código</label>
+                    <span>
+                        <i class="fab fa-slack-hash"></i>
+                        <input formControlName="code" name="code" id="code" type="text" pInputText />
+                    </span>
+                    <app-validation-input [formGroup]="modalForm" formInputName="code"
+                            [validation_messages]="validations"></app-validation-input>
+                </div>
+                <div class="p-field p-col-12 p-md-6">
+                    <label for="partNameEnglish" [textContent]="titleLabel1"></label>
+                    <span>
+                        <i class="fab fa-slack-hash"></i>
+                        <input formControlName="partNameEnglish" name="partNameEnglish" id="partNameEnglish" type="text"
+                            pInputText />
+                    </span>
+                    <app-validation-input [formGroup]="modalForm" formInputName="partNameEnglish"
+                            [validation_messages]="validations"></app-validation-input>
+                </div>
+                <div class="p-field p-col-12 p-md-6">
+                    <label for="partNameSpanish" [textContent]="titleLabel2"></label>
+                    <span>
+                        <i class="fab fa-slack-hash"></i>
+                        <input formControlName="partNameSpanish" name="partNameSpanish" id="partNameSpanish" type="text"
+                            pInputText />
+                    </span>
+                    <app-validation-input [formGroup]="modalForm" formInputName="partNameSpanish"
+                            [validation_messages]="validations"></app-validation-input>
+                </div>
+                <div class="p-field p-col">
+                    <label for="status">Estatus *</label>
+                    <span>
+                        <span>Inactivo &nbsp;</span>
+                        <p-inputSwitch class="ng-untouched ng-pristine" formControlName="status" name="status"
+                            id="status">
+                        </p-inputSwitch>
+                        <span>&nbsp; Activo</span>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </form>
+    <p-footer>
+        <button pButton pRipple type="button" [disabled]="!modalForm.valid" (click)="saveModal()" label="Guardar"
+            class="p-mr-2 p-mb-2"></button>
+        <button pButton pRipple type="button" (click)="display = false" label="Cancelar"
+            class="p-button-danger p-mr-2 p-mb-2"></button>
+    </p-footer>
+</p-dialog>
+
+<!--Edit Relateds-->
+<p-dialog header="{{ title }}" [(visible)]="displayEdit" [modal]="true" [style]="{ width: '800px' }" appendToBody="true">
+    <form [formGroup]="updateForm" class="ui-g-12">
+        <div style="line-height: 1.5">
+            <div class="p-fluid p-formgrid p-grid">
+                <div class="p-field p-col-12 p-md-6">
+                    <label for="updatePart">Parte *</label>
+                    <span>
+                        <div class="p-inputgroup" *ngIf="!showPart">
+                            <button pButton pRipple type="button" class="p-button-primary"
+                                icon="pi pi-plus" (click)="addPart()"></button>
+                            <p-dropdown formControlName="updatePart" [options]="partDrown"
+                                optionLabel="label" name="selectPart" appendTo="body"
+                                id="updatePart" placeholder="Seleccionar Parte"
+                                [style]="{ width: '100%' }" [showClear]="true">
+                            </p-dropdown>
+                        </div>
+                    </span>
+                </div>
+                <div class="p-field p-col-12 p-md-6">
+                    <label for="updateDefect">Defecto *</label>
+                    <span>
+                        <div class="p-inputgroup" *ngIf="!showDefect">
+                            <button pButton pRipple type="button" class="p-button-primary"
+                                icon="pi pi-plus" (click)="addDefect()"></button>
+                            <p-dropdown formControlName="updateDefect" [options]="defectDrown"
+                               optionLabel="label" name="selectDefect" appendTo="body"
+                                id="updateDefect" placeholder="Seleccionar Defecto"
+                                [style]="{ width: '100%' }" [showClear]="true">
+                            </p-dropdown>
+                        </div>
+                    </span>
+                </div>
+                <div class="p-field p-col-12 p-md-6">
+                    <label for="updateSymptom">Síntoma *</label>
+                    <span>
+                        <div class="p-inputgroup" *ngIf="!showSymptom">
+                            <button pButton pRipple type="button" class="p-button-primary"
+                                icon="pi pi-plus" (click)="addSymptom()"></button>
+                            <p-dropdown formControlName="updateSymptom" [options]="sympDrown"
+                                optionLabel="label" name="selectSymptom" appendTo="body"
+                                id="updateSymptom" placeholder="Seleccionar Síntoma"
+                                [style]="{ width: '100%' }" [showClear]="true">
+                            </p-dropdown>
+                        </div>
+                    </span>
+                </div>
+                <div class="p-field p-col">
+                    <label for="status">Estatus *</label>
+                    <span>
+                        <span>Inactivo &nbsp;</span>
+                        <p-inputSwitch class="ng-untouched ng-pristine" formControlName="status" name="status"
+                            id="status">
+                        </p-inputSwitch>
+                        <span>&nbsp; Activo</span>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </form>  
+    <p-footer>
+        <button pButton pRipple type="button" [disabled]="updateForm.valid" (click)="saveEditRelated()" label="Guardar"
+            class="p-mr-2 p-mb-2"></button>
+        <button pButton pRipple type="button" (click)="displayEdit = false" label="Cancelar"
+            class="p-button-danger p-mr-2 p-mb-2"></button>
+    </p-footer>
+</p-dialog>

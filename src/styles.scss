@@ -1,0 +1,333 @@
+/* You can add global styles to this file, and also import other style files */
+.sisDesing {
+    background: linear-gradient(to right, #283747, #5d6d7e);
+}
+
+.mssDesing {
+    background: linear-gradient(90deg,
+            rgb(142, 66, 66) 0%,
+            rgb(180, 14, 14) 100%);
+}
+
+.colorRed {
+    background: #7b241c;
+}
+
+.colorBtn {
+    background: #ecf0f1;
+}
+
+// :::: INICIA ::::TOP-BAR
+.layout-topbar .layout-menubutton .layout-menubutton-icon:before,
+.layout-topbar .layout-menubutton .layout-menubutton-icon:after,
+.layout-topbar .layout-menubutton .layout-menubutton-icon {
+    background: #5d6d7e;
+}
+
+.avatar {
+    margin-left: inherit;
+}
+
+.infoAvatar {
+    color: aliceblue;
+    font-family: cursive;
+    font-size: 11px;
+    padding: 8px;
+}
+
+.topShadow,
+.shadow {
+    box-shadow: 0 2px 10px 0 rgb(0 0 0 / 16%), 11px 0px 5px 0px rgb(0 0 0 / 26%);
+}
+
+.logo {
+    width: 100px;
+    height: 60px !important;
+    padding-left: 30px !important;
+}
+
+.layout-top {
+    padding-top: 0px;
+    padding-left: 0px !important;
+    padding-right: 0px !important;
+    padding-bottom: 5px !important;
+}
+
+// :::: TERMINA ::::TOP-BAR
+
+//SINTOMAS
+// :::: INICIA ::::SINTOMAS MODAL
+.rojo .p-dialog .p-dialog-header {
+    height: 8vh !important;
+    background: #f39c12 !important;
+    color: #ffffff !important;
+}
+
+.azul .p-dialog .p-dialog-header {
+    height: 8vh !important;
+    background: #1e88e5 !important;
+    color: #ffffff !important;
+}
+
+form {
+    margin-top: 23px;
+}
+
+.p-sortIcon,
+.p-datatable .p-datatable-thead>tr>th {
+    text-align: left;
+    padding: 1rem 1rem;
+    font-weight: 500;
+    color: #ffffff;
+    background: #2471a3;
+    transition: revert;
+    cursor: context-menu;
+}
+
+.p-datatable .p-datatable-tbody>tr>td {
+    text-align: left;
+}
+
+.p-datatable .p-sortable-column.p-highlight {
+    color: #ffffff !important;
+    background: #2471a3 !important;
+}
+
+// --------------------------------------------------------
+// INICIA >>> ESTILOS DE TABLA
+.p-disabled {
+    opacity: 0.9;
+}
+
+.p-datatable .p-sortable-column.p-highlight {
+    background: #337ab7;
+    color: rgba(255, 255, 255, 0.87);
+}
+
+.p-accordion-header-text {
+    font-weight: bold !important;
+}
+
+.p-panelmenu {
+    background: #808b96;
+    color: #ffffff;
+    font-size: 16px;
+}
+
+.p-panelmenu-content {
+    background: #808b96;
+    color: whitesmoke;
+}
+
+.p-menuitem {
+    background: #e5e7e9;
+}
+
+.p-panelmenu .p-panelmenu-header>a {
+    padding: 1rem !important;
+}
+
+@media screen and (max-width: 1030px) {
+    body {
+        min-width: 1050px;
+    }
+}
+
+
+.layout-container.layout-top-medium {
+    .layout-content {
+        margin-top: 0;
+        padding: 0;
+        display: grid;
+        column-gap: 10px;
+        grid-template-columns: minmax(min-content, max-content) auto;
+        grid-template-rows: minmax(min-content, max-content) auto;
+        grid-template-areas: 'breadcrumb breadcrumb breadcrumb''menu content content';
+
+        .wm-menu {
+            grid-area: menu;
+            background: #273746;
+        }
+
+        .wm-breadcrumb {
+            grid-area: breadcrumb;
+        }
+
+        .wm-content {
+            grid-area: content;
+        }
+    }
+}
+
+
+.custom-marker {
+    display: flex;
+    width: 2rem;
+    height: 2rem;
+    align-items: center;
+    justify-content: center;
+    color: #ffffff;
+    border-radius: 50%;
+    z-index: 1;
+}
+
+
+::ng-deep {
+
+    .p-timeline-event-content,
+    .p-timeline-event-opposite {
+        line-height: 1;
+    }
+
+}
+
+@media screen and (max-width: 960px) {
+    ::ng-deep {
+        .customized-timeline {
+            .p-timeline-event:nth-child(even) {
+                flex-direction: row !important;
+
+                .p-timeline-event-content {
+                    text-align: left !important;
+                }
+            }
+
+            .p-timeline-event-opposite {
+                flex: 0;
+            }
+
+            .p-card {
+                margin-top: 1rem;
+            }
+        }
+    }
+}
+
+.p-panelmenu .p-panelmenu-content .p-menuitem .p-menuitem-link {
+    margin-left: 1.2rem;
+}
+
+.p-panelmenu .p-panelmenu-header > a .p-menuitem-icon {
+    color: #ffffff;
+    background-color: red;
+    font-size: 12px;
+}
+
+.p-panelmenu .p-panelmenu-content .p-menuitem .p-menuitem-link {
+    font-size: 10px;    
+}
+
+.title {
+    font-size: 2rem;
+    color: var(--home-primary-text-color);
+    font-weight: 700;
+}
+
+.p-dialog .p-dialog-header {
+    background-color: #1e88e5 !important;
+    color: #ffffff;
+}
+
+.p-datatable .p-sortable-column:focus {
+    background-color: rgba(0, 0, 0, 0);
+}
+
+.p-datatable .p-datatable-tbody > tr {
+    outline: 0 none;
+}
+
+.p-datatable .p-datatable-tbody > tr:not(.p-highlight):focus {
+    background-color: rgba(0, 0, 0, 0);
+}
+
+.p-treetable .p-sortable-column:focus {
+    background-color: rgba(0, 0, 0, 0);
+}
+.p-treetable .p-treetable-tbody > tr {
+    outline: 0 none;
+}
+.p-treetable .p-treetable-tbody > tr:not(.p-highlight):focus {
+    background-color: rgba(0, 0, 0, 0);
+}
+.p-datatable .p-sortable-column:not(.p-highlight):hover {
+    background: #2471a3;
+    color: #ffffff;
+}
+
+.p-dropdown-panel .p-dropdown-items .p-dropdown-item {
+    width: 300px;
+}
+
+.p-datatable .p-datatable-tbody > tr:hover {
+    background-color: #96c7ec;
+    color: #ffffff;
+}
+
+.p-datatable.p-datatable-striped .p-datatable-tbody > tr:hover {
+    background-color: #96c7ec;
+    color: #ffffff;
+}
+
+@media screen and (max-width: 960px) {
+    .menu-btn {
+        display: block;
+        visibility: visible;
+    }
+
+    .menu-lg {
+        display: none;
+        visibility: hidden;
+    }
+
+    .header-img {
+        display: none;
+        visibility: hidden;
+    }
+}
+
+@media screen and (min-width: 960px) {
+    .menu-btn {
+        visibility: hidden;
+    }
+
+    .menu-lg {
+        visibility: visible;
+    }
+
+    .header-img {
+        visibility: visible;
+    }
+}
+
+.p-component-overlay {
+	background-color: rgba(0, 0, 0, 0.4);
+	transition-duration: 0.15s;
+}
+
+.p-component-overlay-enter {
+	animation: p-component-overlay-enter-animation 150ms forwards;
+}
+
+.p-component-overlay-leave {
+	animation: p-component-overlay-leave-animation 150ms forwards;
+}
+
+@keyframes p-component-overlay-enter-animation {
+	from {
+		background-color: transparent;
+	}
+
+	to {
+		background-color: rgba(0, 0, 0, 0.4);
+	}
+}
+
+@keyframes p-component-overlay-leave-animation {
+	from {
+		background-color: rgba(0, 0, 0, 0.4);
+	}
+
+	to {
+		background-color: transparent;
+	}
+}

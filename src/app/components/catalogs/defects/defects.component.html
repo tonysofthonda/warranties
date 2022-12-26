@@ -1,0 +1,121 @@
+<div class="main-container">
+  <div class="container">
+    <p class="title">Catálogo de Defectos</p>
+    <div class="layout-topbar-separator"></div>
+    <p-toast key="tst" position="top-right"></p-toast>
+    <div>
+      <div class="main-container">
+        <div class="p-col-12">
+          <div class="card">
+            <p-table #dt [columns]="heardes" [value]="defects" [paginator]="true" 
+              [loading]="loadingDefects" [rows]="10" [pageLinks]="5"
+              styleClass="p-datatable-sm p-datatable-striped" [responsive]="true" responsiveLayout="stack"
+              [globalFilterFields]="['descriptionEng','descriptionSpa']">
+              <ng-template pTemplate="caption">
+                <div class="p-d-flex p-flex-column p-flex-md-row p-jc-md-between table-header">
+                  <div class="p-field p-col-2">
+                    <button pButton pRipple type="button" (click)="addDefect()" label="&nbsp; Agregar"
+                      class="p-button-rounded" pTooltip="Agregar defecto">
+                      <i class="fas fa-plus"></i>
+                    </button>
+                  </div>
+                  <span>
+                    <i class="pi pi-search"></i>
+                    <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')"
+                      placeholder="Buscar defecto" />
+                  </span>
+                </div>
+              </ng-template>
+
+              <ng-template pTemplate="header">
+                <tr styleClass="p-mr-2">
+                  <th *ngFor="let item of heardes">
+                    {{ item.label }}
+                  </th>
+                </tr>
+              </ng-template>
+
+              <ng-template pTemplate="body" let-defects>
+                <tr [pSelectableRow]="defects">
+                  <td>
+                    <span>{{ defects.descriptionEng }}</span>
+                  </td>
+                  <td>
+                    <span>{{ defects.descriptionSpa }}</span>
+                  </td>
+                  <td>
+                    <span>
+                      <p-inputSwitch [(ngModel)]="defects.status" pTooltip="Actualizar estatus"
+                      (onChange)="updateStatus(defects)"></p-inputSwitch>
+                    </span>
+                  </td>
+                  <td>
+                    <span class="p-column-title">Acciones</span>
+                    <button pButton pRipple type="button" (click)="editDefects(defects)" 
+                    class="p-button-rounded p-button-warning p-mr-2 p-mb-2" 
+                    icon="pi pi-pencil" pTooltip="Editar registro"></button>
+                  </td>
+                </tr>
+              </ng-template>
+
+              <ng-template pTemplate="emptymessage">
+                <tr>
+                  <td>
+                    No se encontraron registros.
+                  </td>
+                </tr>
+              </ng-template>
+            </p-table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="ui-g-6">
+  <p-dialog icon="pi pi-times" header="{{ title }}" [(visible)]="display" [modal]="true" [style]="{ width: '800px' }"appendToBody="true">
+    <form [formGroup]="datosForm" #form="ngForm" class="ui-g ui-fluid form-group">
+      <div style="line-height: 1.5">
+        <div class="p-fluid p-formgrid p-grid">
+          <div class="p-field p-col-4">
+            <label for="descriptionEng">Nombre del defecto (Inglés)*</label>
+            <span>
+              <i class="fas fa-keyboard"></i>
+              <input formControlName="descriptionEng" name="descriptionEng" id="descriptionEng" type="text"
+                pInputText />
+            </span>
+            <app-validation-input [formGroup]="datosForm" formInputName="descriptionEng"
+              [validation_messages]="validations"></app-validation-input>
+          </div>
+          <div class="p-field p-col-4">
+            <label for="descriptionSpa">Nombre del defecto (Español)*</label>
+            <span>
+              <i class="fas fa-keyboard"></i>
+              <input formControlName="descriptionSpa" name="descriptionSpa" id="descriptionSpa" type="text"
+                pInputText />
+            </span>
+            <app-validation-input [formGroup]="datosForm" formInputName="descriptionSpa"
+              [validation_messages]="validations"></app-validation-input>
+          </div>
+          <div class="p-field p-col-4">
+            <label for="status">Estatus *</label>
+            <span>
+                <span>Inactivo &nbsp;</span>
+                <p-inputSwitch class="ng-untouched ng-pristine" formControlName="status" name="status"
+                    id="status">
+                </p-inputSwitch>
+                <span>&nbsp; Activo</span>
+            </span>
+          </div>
+        </div>
+      </div>
+    </form>
+    <p-footer>
+      <button pButton pRipple type="button" [disabled]="!datosForm.valid" (click)="saveDefect()" label="Guardar"
+        class="p-mr-2 p-mb-2"></button>
+      <button pButton pRipple type="button" (click)="display = false" label="Cancelar"
+        class="p-button-danger p-mr-2 p-mb-2"></button>
+    </p-footer>
+  </p-dialog>
+</div>

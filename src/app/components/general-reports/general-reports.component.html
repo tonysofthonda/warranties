@@ -1,0 +1,68 @@
+<p-toast key="tst"></p-toast>
+<p class="title">Reportes Generales</p>
+<p-card>
+    <ng-template pTemplate="content">
+        <p-divider align="center">
+            <span class="p-tag">MOTORCYCLE TECHNICAL SUPPORT SUMMARY</span>
+        </p-divider>
+
+        <form class="ui-g-12" [formGroup]="technicalSummaryForm">
+            <div style="line-height: 1.5">
+                <div class="p-fluid p-formgrid p-grid">
+                    <div class="p-field p-col-12 p-md-4">
+                        <label for="dateIni">Fecha de Inicio *</label>
+                        <span>
+                            <span>
+                                <p-calendar formControlName="dateIni" [showIcon]="true" (onSelect)="onSelectTechnicalSummary()" inputId="icon"></p-calendar>
+                            </span>
+                        </span>
+                    </div>
+                    <div class="p-field p-col-12 p-md-4">
+                        <label for="dateEnd">Fecha Final *</label>
+                        <span>
+                            <span>
+                                <p-calendar formControlName="dateEnd" [showIcon]="true" (onSelect)="onSelectTechnicalSummary()"  inputId="icon"></p-calendar>
+                            </span>
+                        </span>
+                    </div>
+                    <div class="p-field p-col-12 p-md-2">
+                        <br />
+                        <button pButton pRipple iconPos="right" icon="pi pi-file-excel" type="button" label="Exportar Búsqueda" [disabled]="btnTechnicalSummary"
+                                class="p-button-rounded p-button-success" pTooltip="Descargar reporte" (click)="getReportTechnicalSummary()"></button>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+        <p-divider align="center">
+            <span class="p-tag">HISTÓRICO DE MONTOS APROBADOS</span>
+        </p-divider>
+
+        <form class="ui-g-12" [formGroup]="historicalAmounts">
+            <div style="line-height: 1.5">
+                <div class="p-fluid p-formgrid p-grid">
+                    <div class="p-field p-col-12 p-md-4">
+                        <label for="dateIni">Fecha de Inicio *</label>
+                        <span>
+                            <span>
+                                <p-calendar formControlName="dateIni" [showIcon]="true" (onSelect)="onSelectHistory()" inputId="icon"></p-calendar>
+                            </span>
+                        </span>
+                    </div>
+                    <div class="p-field p-col-12 p-md-4">
+                        <label for="dateEnd">Fecha Final *</label>
+                        <span>
+                            <span>
+                                <p-calendar formControlName="dateEnd" [minDate]="minDate" (onSelect)="onSelectHistory()" [showIcon]="true"  inputId="icon"></p-calendar>
+                            </span>
+                        </span>
+                    </div>
+                    <div class="p-field p-col-12 p-md-2">
+                        <br />
+                        <button pButton pRipple iconPos="right" pTooltip="Descargar reporte" icon="pi pi-file-excel" type="button" [disabled]="btnhistoricalAmounts" label="Exportar Búsqueda" (click)="getReportHistoricalAmounts()" class="p-button-rounded p-button-success"></button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </ng-template>
+</p-card>

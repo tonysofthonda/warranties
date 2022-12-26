@@ -1,0 +1,179 @@
+<p class="title">Histórico de Montos Aprobados</p>
+<p-card styleClass="p-card-shadow">
+  <form class="ui-g-12" [formGroup]="historyApprovedAmountForm">
+    <div style="line-height: 1.5">
+      <div class="p-fluid p-formgrid p-grid">
+        <div class="p-field p-col-12 p-md-4">
+            <label for="vin">Vin *</label>
+            <span>
+                <input formControlName="vin" name="vin" id="vin" type="text" pInputText  />
+            </span>
+            <app-validation-input [formGroup]="historyApprovedAmountForm" formInputName="distribuidor" [validation_messages]="validations">
+            </app-validation-input>
+        </div>
+        <div class="p-field p-col-12 p-md-4">
+            <label for="claimNumber">Número de reclamo *</label>
+            <span>
+                <input formControlName="claimNumber" name="claimNumber" id="vin" type="text" pInputText  />
+            </span>
+        </div>
+
+        <div class="p-field p-col-12 p-md-4">
+            <label for="dealer">Distribuidor *</label>
+            <span>
+                <p-dropdown formControlName="dealer" [options]="dealerSelect"
+                    optionLabel="label" name="dealer" id="dealer" placeholder="Seleccionar Distribuidor"
+                    [style]="{ width: '100%' }" [showClear]="true">
+                </p-dropdown>
+            </span>
+        </div>
+
+        <div class="p-field p-col-12 p-md-4">
+            <label for="dateOrder">Fecha de orden *</label>
+            <span>
+            <p-calendar formControlName="dateOrder" [showIcon]="true"  inputId="icon"></p-calendar>
+            </span>
+        </div>
+
+        <div class="p-field p-col-12 p-md-4">
+            <label for="status">Estatus *</label>
+            <p-dropdown formControlName="status" [options]="statusItems"
+                optionLabel="label" name="status" id="status" placeholder="Seleccionar Estatus"
+                [style]="{ width: '100%' }" [showClear]="true">
+            </p-dropdown>
+        </div>
+
+        <div class="p-field p-col-12 p-md-4">
+            <label for="period">Periodo *</label>
+            <p-dropdown formControlName="period" [options]="periodSelect"
+                optionLabel="label" name="period" id="period" placeholder="Seleccionar Periodo"
+                [style]="{ width: '100%' }" [showClear]="true">
+            </p-dropdown>
+        </div>
+      </div>
+        <button pButton type="button" class="p-button-info" label="Buscar" pTooltip="Buscar registros" iconPos="right"></button>
+      </div>
+  </form>
+</p-card>
+<div class="main-container">
+    <div class="p-col-12">
+      <div class="card">
+        <p-table #dt [columns]="heardes" [value]="data" [rows]="10" [paginator]="true" [pageLinks]="5"
+          styleClass="p-datatable-sm p-datatable-striped"
+          [responsive]="true" responsiveLayout="stack" [loading]="loading">
+          <ng-template pTemplate="header">
+            <tr styleClass="p-mr-2">
+              <th *ngFor="let item of heardes">
+                {{ item.label }}
+              </th>
+            </tr>
+          </ng-template>
+
+          <ng-template pTemplate="body" let-history>
+            <tr [pSelectableRow]="approved">
+              <td>
+                <span>{{ history.amount }}</span>
+              </td>
+              <td>
+                <span>{{ history.claim }}</span>
+
+              </td>
+              <td>
+                <span>{{ history.vin }}</span>
+              </td>
+              <td>
+                <span>{{ history.dateIni }}</span>
+              </td>
+              <td>
+                <span>{{ history.status }}</span>
+              </td>
+              <td>
+                <span>{{ history.period }}</span>
+              </td>
+              <td>
+                <span class="p-column-title">Acciones</span>
+                <button pButton pRipple type="button" (click)="historyDetail(history)"
+                        class="p-button-rounded p-button-info p-mr-2 p-mb-2" icon="pi pi-info-circle"></button>
+              </td>
+            </tr>
+          </ng-template>
+
+          <ng-template pTemplate="emptymessage">
+            <tr>
+              <td>
+                No se encontraron registros.
+              </td>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="footer">
+            <tr>
+              <td>
+                <button pButton type="button" (click)="downloadExcel()" class="p-button-success" 
+                label="Exportar Busqueda" pTooltip="Descargar reporte" icon="pi pi-file-excel" iconPos="right"></button>
+              </td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </div>
+    </div>
+</div>
+
+<p-dialog header="Detalle" [(visible)]="displayDetail" [modal]="true">
+    <p-table #dt [columns]="heardesDetail" [value]="dataDetail"  [rows]="10" [paginator]="true" [pageLinks]="5"
+          styleClass="p-datatable-sm p-datatable-striped"
+          [responsive]="true" responsiveLayout="stack" [loading]="loading">
+          <ng-template pTemplate="header">
+            <tr styleClass="p-mr-2">
+              <th *ngFor="let item of heardesDetail">
+                {{ item.label }}
+              </th>
+            </tr>
+          </ng-template>
+
+          <ng-template pTemplate="body" let-history>
+            <tr [pSelectableRow]="approved">
+              <td>
+                <span>{{ history.partNumber }}</span>
+              </td>
+              <td>
+                <span>{{ history.quantity }}</span>
+
+              </td>
+              <td>
+                <span>{{ history.amount }}</span>
+              </td>
+              <td>
+                <span>{{ history.claimNumber }}</span>
+              </td>
+              <td>
+                <span>{{ history.description }}</span>
+              </td>
+              <td>
+                <span>{{ history.pu }}</span>
+              </td>
+              <td>
+                <span>{{ history.laborTime }}</span>
+              </td>
+              <td>
+                <span>{{ history.iva }}</span>
+              </td>
+              <td>
+                <span>{{ history.status }}</span>
+              </td>
+            </tr>
+          </ng-template>
+
+          <ng-template pTemplate="emptymessage">
+            <tr>
+              <td>
+                No se encontraron registros.
+              </td>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="summary">
+            <div class="ui-helper-clearfix" style="text-align: left">
+                <button pButton type="button" style="float:right"  class="p-button-danger" label="Cerrar" icon="pi pi-times" iconPos="right"></button>
+            </div>
+          </ng-template>
+    </p-table>
+</p-dialog>

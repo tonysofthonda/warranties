@@ -1,0 +1,29 @@
+export class TechnicalSummary {
+    deal: string;
+	reporte: string;
+	model: string;
+	proveed: string;
+	vin: string;
+	engine: string;
+	sale: string;
+	fail: string;
+	repair: string;
+	km: string;
+	partCausal: string;
+	descriptionPart: string;
+	reportedSymptom: string;
+	defectDescription: string;
+	descriptionFail: string;
+	code: string;
+	frt: string;
+	amountPesos: string;
+	usdt: string;
+	spareParts: string;
+	unship: string;
+	labor: string;
+	responseDate: string;
+	status: string;
+	close: string;
+	sample: string;
+	note: string;
+}

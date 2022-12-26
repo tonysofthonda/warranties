@@ -1,0 +1,106 @@
+<div class="main-container">
+    <div class="container">
+        <h3>Consultar Reclamos de Garantias</h3>
+        <hr>
+        <p-toast key="tst" position="top-right"></p-toast>
+
+        <div class="container">
+            <div class="card">
+                <p-table #dt1 [value]="claimData" [(selection)]="selectedClaim" dataKey="id"
+                    styleClass="p-datatable-sm p-datatable-striped" 
+                    [responsive]="true" responsiveLayout="stack" [loading]="loading"
+                    [rows]="10" [paginator]="true" [pageLinks]="5">
+                    <ng-template pTemplate="header">
+                        <!--encabezados-->
+                        <tr>
+                            <th pSortableColumn="name">Número de reclamo</th>
+                            <th pSortableColumn="name">Número de VIN <p-sortIcon field="name"></p-sortIcon>
+                            </th>
+                            <th pSortableColumn="country.name">Número de servicio <p-sortIcon field="country.name">
+                                </p-sortIcon>
+                            </th>
+                            <th pSortableColumn="representative.name">Fecha de reparación <p-sortIcon
+                                    field="representative.name">
+                                </p-sortIcon>
+                            </th>
+                            <th pSortableColumn="status">Estatus <p-sortIcon field="status"></p-sortIcon>
+                            </th>
+                            <th pSortableColumn="status">Acciones <p-sortIcon field="status"></p-sortIcon>
+                            </th>
+                        </tr>
+                        <tr>
+                            <th>
+                                <span class="p-input-icon-right">
+                                    <i class="fab fa-slack-hash"></i>
+                                    <input pInputText type="text" style="width: 13rem; height: 2rem;"
+                                        (input)="dt1.filter($event.target.value, 'name', 'contains')"
+                                        [value]="dt1.filters['name']?.value" placeholder="Buscar No. reclamo"
+                                        class="p-column-filter">
+                                </span>
+
+                            </th>
+                            <th>
+                                <span class="p-input-icon-right">
+                                    <i class="fab fa-slack-hash"></i>
+                                    <input pInputText type="text" style="width: 13rem; height: 2rem;"
+                                        (input)="dt1.filter($event.target.value, 'country.name', 'contains')"
+                                        [value]="dt1.filters['country.name']?.value" placeholder="Buscar No. VIN"
+                                        class="p-column-filter">
+                                </span>
+                            </th>
+                            <th>
+                                <span class="p-input-icon-right">
+                                    <i class="fab fa-slack-hash"></i>
+                                    <input pInputText type="text" style="width: 13rem; height: 2rem;"
+                                        (input)="dt1.filter($event.target.value, 'representative.name', 'contains')"
+                                        [value]="dt1.filters['representative.name']?.value"
+                                        placeholder="Buscar No. servicio" class="p-column-filter">
+                                </span>
+                            </th>
+                            <th>
+                                <span class="p-input-icon-right">
+                                    <i class="far fa-calendar-alt"></i>
+                                    <input pInputText type="text" style="width: 13rem; height: 2rem;"
+                                        (input)="dt1.filter($event.target.value, 'status', 'contains')"
+                                        [value]="dt1.filters['status']?.value" placeholder="Buscar por fecha"
+                                        class="p-column-filter">
+                                </span>
+                            </th>
+                            <th>
+                                <span class="p-input-icon-right">
+                                    <i class="fas fa-keyboard"></i>
+                                    <input pInputText type="text" style="width: 13rem; height: 2rem;"
+                                        (input)="dt1.filter($event.target.value, 'status', 'contains')"
+                                        [value]="dt1.filters['status']?.value" placeholder="Buscar por estatus"
+                                        class="p-column-filter">
+                                </span>
+                            </th>
+                            <th></th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-claimData>
+                        <tr>
+                            <td>{{claimData.claimNo}}</td>
+                            <td>{{claimData.vin}}</td>
+                            <td>{{claimData.serviceNo}}</td>
+                            <td>{{claimData.repairDate}}</td>
+                            <td>{{claimData.status}}</td>
+                            <td>
+                                <span>
+                                    <button pButton pRipple type="button" (click)="editCleim(claimData.sstatus)"
+                                        class="p-button-rounded p-button-warning p-mr-2 p-mb-2"
+                                        icon="pi pi-pencil"></button>
+                                </span>
+                            </td>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="emptymessage">
+                        <tr>
+                            <td colspan="6">No se encontraron registros</td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+            </div>
+        </div>
+    </div>
+</div>

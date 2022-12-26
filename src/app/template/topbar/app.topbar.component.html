@@ -1,0 +1,48 @@
+<div class="layout-topbar header-img">
+    <div class="p-grid">
+        <div class="p-col-12 p-d-flex p-jc-between p-shadow-24">
+            <div>
+                <a href="#">
+                    <img class="logo" src="assets/layout/images/logo.png" alt="Logo Honda" />
+                </a>
+            </div>
+            <div>
+                <div>
+                    <div>
+                        <a href="#" class="profile-menu-button" (click)="app.onTopbarUserMenuButtonClick($event)">
+                            <img class="avatar" style="border-radius: 50%;" src="assets/layout/images/avatar1.png" alt="sapphire-layout" />
+                            <span class="infoAvatar">
+                                <p>{{ userName }}</p>
+                                {{date | date: "dd-MMMM-yyyy"}}
+                            </span>
+                        </a>
+                    </div>
+
+
+                    <ul class="layout-profile-menu fadeInDown"
+                        [ngClass]="{'layout-profile-menu-active': app.topbarUserMenuActive}"
+                        (click)="app.onTopbarUserMenuClick($event)">
+                        <li role="menuitem">
+                            <a href="#" pRipple (click)="app.onTopbarSubItemClick($event)">
+                                <i class="pi pi-user"></i>
+                                <span>Profile</span>
+                            </a>
+                        </li>
+                        <li role="menuitem">
+                            <a href="#" pRipple (click)="app.onTopbarSubItemClick($event)">
+                                <i class="pi pi-cog"></i>
+                                <span>Settings</span>
+                            </a>
+                        </li>
+                        <li role="menuitem">
+                            <a href="#" pRipple (click)="logout()">
+                                <i class="pi pi-times"></i>
+                                <span>Logout</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

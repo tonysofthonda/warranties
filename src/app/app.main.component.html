@@ -1,0 +1,22 @@
+<div class="layout-container"
+    [ngClass]="{
+    'layout-menu-horizontal': horizontal,
+   'layout-menu-active': menuActive,
+   'layout-top-small': topbarSize === 'small',
+   'layout-top-medium': topbarSize === 'medium',
+   'layout-top-large': topbarSize === 'large', 'p-ripple-disabled': !ripple, 'p-input-filled':  inputStyle === 'filled'
+    }" [class]="topbarColor + ' ' + menuColor">
+    <div class="layout-top p-shadow-7" [ngClass]="{'sisDesing': desing === false, 'mssDesing': desing === true }">
+        <app-topbar></app-topbar>
+    </div>
+    <div class="layout-content">
+        <div class="wm-menu">
+            <app-menu></app-menu>
+        </div>
+        
+        <div class="wm-content">
+            <app-breadcrumb></app-breadcrumb>
+            <router-outlet></router-outlet>
+        </div>
+    </div>
+</div>

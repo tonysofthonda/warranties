@@ -1,0 +1,144 @@
+<div>
+    <div class="container">
+        <div class="p-col-12">
+            <div class="card">
+                <div class="p-d-flex p-flex-column p-flex-md-row p-jc-md-between table-header">
+                    <div class="p-field p-col-2" *ngIf="this.stepService.warrantyInformation.status === 'Draft' || !this.stepService.warrantyInformation.status">
+                        <button pButton pRipple type="button" (click)="addOther()" label="&nbsp; Agregar"
+                            class="p-button-rounded">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                    </div>
+                </div>
+                <p-table #dt [columns]="heardes" [value]="otherJobs" styleClass="p-datatable-sm p-datatable-striped" 
+                    [responsive]="true" responsiveLayout="stack" [loading]="loading"
+                    [rows]="10" [paginator]="true" [pageLinks]="5" [globalFilterFields]="['descripcion']">
+                    <ng-template pTemplate="header">
+                        <tr styleClass="p-mr-2">
+                            <th *ngFor="let item of heardes" pSortableColumn="codigo">
+                                {{item.label}}
+                            </th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-otherJobs>
+                        <tr [pSelectableRow]="otherJobs">
+
+                            <td>
+                                <span>{{ otherJobs.description }}</span>
+                            </td>
+
+                            <td>
+                                <span>{{ otherJobs.quantity }}</span>
+                            </td>
+
+                            <td>
+                                <span>{{ otherJobs.details }}</span>
+                            </td>
+
+                            <td>
+                                <span>{{ otherJobs.invoice }}</span>
+                            </td>
+
+                            <td>
+                                <span>{{ otherJobs.cost | currency:'USD'}}</span>
+                            </td>
+
+                            <td>
+                                <span>{{otherJobs.total | currency:'USD'}}</span>
+                            </td>
+
+                            <td *ngIf="this.stepService.warrantyInformation.status === 'Draft' || !this.stepService.warrantyInformation.status">
+                                <span>
+                                    <button pButton pRipple type="button" (click)="editOther(otherJobs)"
+                                        class="p-button-rounded p-button-warning p-mr-2 p-mb-2"
+                                        icon="pi pi-pencil" pTooltip="Editar Registro"></button>
+                                </span>
+
+                                <span>
+                                    <button pButton pRipple type="button" (click)="deleteInformation(otherJobs)"
+                                        class="p-button-rounded p-button-danger p-mr-2 p-mb-2"
+                                        icon="pi pi-trash" pTooltip="Eliminar registro"></button>
+                                </span>
+
+                            </td>
+                        </tr>
+                    </ng-template>
+
+                    <ng-template pTemplate="emptymessage">
+                        <tr>
+                            <td>
+                                No se encontraron registros.
+                            </td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<p-confirmDialog></p-confirmDialog>
+
+<p-dialog header="{{ title }}" [(visible)]="display" [modal]="true" [style]="{ width: '800px' }" appendToBody="true">
+    <form [formGroup]="datosForm" class="ui-g-12">
+        <div style="line-height: 1.5">
+            <div class="p-fluid p-formgrid p-grid">
+                <div class="p-field p-col-12 p-md-6">
+                    <label for="category">Selecciona una categoría *</label>
+                    <p-dropdown formControlName="category" [options]="category" [(ngModel)]="selectCategory"
+                        optionLabel="name" placeholder="Select categoria"
+                        [style]="{ width: '100%', overflow: 'visible' }" [showClear]="false" [virtualScroll]="true"
+                        [itemSize]="5">
+                    </p-dropdown>
+                </div>
+                <div class="p-field p-col-12 p-md-6">
+                    <span class="md-inputfield">
+                        <label for="description">Descripción *</label>
+                        <input formControlName="description" name="description" id="description" type="text" pInputText />
+                        <app-validation-input [formGroup]="datosForm" formInputName="description"
+                            [validation_messages]="validations">
+                        </app-validation-input>
+                    </span>
+                </div>
+                <div class="p-field p-col-12 p-md-6">
+                    <span class="md-inputfield">
+                        <label for="invoice">Factura *</label>
+                        <input formControlName="invoice" name="invoice" id="invoice" pInputText />
+                        <app-validation-input [formGroup]="datosForm" formInputName="invoice"
+                            [validation_messages]="validations"> </app-validation-input>
+                    </span>
+                </div>
+                <div class="p-field p-col-12 p-md-6">
+                    <span class="md-inputfield">
+                        <label for="quantity">Cantidad *</label>
+                        <p-inputNumber formControlName="quantity" name="quantity" id="quantity" autocomplete="off"
+                            [min]="1" maxlength="2" [showButtons]="true"
+                            [(ngModel)]="quantityModel" (ngModelChange)="calculateTotal()"></p-inputNumber>
+                        <app-validation-input [formGroup]="datosForm" formInputName="quantity"
+                            [validation_messages]="validations"> </app-validation-input>
+                    </span>
+                </div>
+                <div class="p-field p-col-12 p-md-6">
+                    <span class="md-inputfield">
+                        <label for="cost">Costo *</label>
+                        <p-inputNumber formControlName="cost" name="cost" id="cost" autocomplete="off"
+                            [min]="0" maxlength="10" [showButtons]="true"
+                            [(ngModel)]="costModel" (ngModelChange)="calculateTotal()" mode="currency" currency="USD" step="0.1"> </p-inputNumber>
+                        <app-validation-input [formGroup]="datosForm" formInputName="cost"
+                            [validation_messages]="validations"> </app-validation-input>
+                    </span>
+                </div>
+                <div class="p-field p-col-12 p-md-6">
+                    <label for="total">Total *</label>
+                    <p-inputNumber [(ngModel)]="totalModel" formControlName="total" name="total" id="total" disabled="true" mode="currency" currency="USD" step="0.1"> </p-inputNumber>
+                </div>
+            </div>
+        </div>
+    </form>
+    <p-footer>
+        <button pButton pRipple type="button" [disabled]="!datosForm.valid" (click)="saveOtherExpenses()"
+            label="Guardar" class="p-mr-2 p-mb-2"></button>
+        <button pButton pRipple type="button" (click)="display = false" label="Cancelar"
+            class="p-button-danger p-mr-2 p-mb-2"></button>
+    </p-footer>
+</p-dialog>

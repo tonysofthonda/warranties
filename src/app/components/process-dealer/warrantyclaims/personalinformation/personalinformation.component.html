@@ -1,0 +1,410 @@
+<p-blockUI [blocked]="blockedDocument">
+    <i class="pi pi-spin pi-spinner" style="font-size: 2rem"></i>
+</p-blockUI>
+<p-toast key="tst"></p-toast>
+<div class="content-container" *ngIf="!consultForm; else elseBlock">
+    <p-button pTooltip="Limpiar formulario" placeholder="Right" (onClick)="resetForms()" class="p-mr-2 p-mb-2" 
+    icon="pi pi-undo" iconPos="right" [style]="{'margin-left': '.5em'}">
+</p-button>
+<br>
+<br>
+<br>
+    <div class="layout-topbar-separator"></div>
+    <p-accordion [multiple]="true">
+        <p-accordionTab header="INFORMACIÓN DEL REPORTE" [selected]="true">
+            <form class="ui-g-12" [formGroup]="reportInformation" *ngIf="reportInformation">
+                <div class="p-grid p-fluid">
+                    <div class="p-field p-col-12 p-md-3">
+                        <label for="claimNumber">Número de Reclamo:</label>
+                        <span>
+                            <input formControlName="claimNumber" name="claimNumber" id="claimNumber" type="text"
+                                pInputText />
+                        </span>
+                    </div>
+                    <div class="p-field p-col-12 p-md-3">
+                        <label for="serviceOrderNumber">Número de Orden de Servicio:</label>
+                        <div class="p-inputgroup">
+                            <span class="p-inputgroup-addon"><i class="pi pi-hashtag"></i></span>
+                            <input formControlName="serviceOrderNumber" name="serviceOrderNumber"
+                                id="serviceOrderNumber" type="text" placeholder="Número de orden"
+                                [(ngModel)]="serviceNumberModel" (ngModelChange)="serviceOrderNumberChange()"
+                                pInputText />
+                        </div>
+                        <app-validation-input [formGroup]="reportInformation" formInputName="serviceOrderNumber"
+                            [validation_messages]="validations">
+                        </app-validation-input>
+                    </div>
+                    <div class="p-field p-col-12 p-md-3">
+                        <label for="status">Estatus:</label>
+                        <span>
+                            <input formControlName="status" name="status"
+                                id="status" type="text" placeholder="Estatus"
+                                disabled pInputText />
+                            <!-- <p-dropdown formControlName="status" [options]="statusDrown" optionLabel="label"
+                                name="status" id="status" appendTo="body" placeholder="Seleccionar Estatus"
+                                [style]="{ width: '100%' }" [showClear]="false">
+                            </p-dropdown> -->
+                        </span>
+                        <app-validation-input [formGroup]="reportInformation" formInputName="status"
+                            [validation_messages]="validations">
+                        </app-validation-input>
+                    </div>
+                    <div class="p-field p-col-12 p-md-3">
+                        <label for="reportCreationDate">Fecha de Creación del Reporte:</label>
+                        <span>
+                            <i class="pi pi-calendar-plus"></i>
+                            <p-calendar formControlName="reportCreationDate" [showIcon]="true" inputId="icon"
+                                dateFormat="dd/mm/yy"></p-calendar>
+                        </span>
+                    </div>
+                    <div class="p-field p-col-12 p-md-3">
+                        <label for="dealerName">Datos del Distribuidor:</label>
+                        <span>
+                            <input formControlName="dealerName" name="dealerName" id="dealerName" type="text"
+                                pInputText />
+                        </span>
+                        <app-validation-input [formGroup]="reportInformation" formInputName="dealerName"
+                            [validation_messages]="validations">
+                        </app-validation-input>
+                    </div>
+                    <div class="p-field p-col-12 p-md-3">
+                        <label for="elaboratedBY">Reporte elaborado por:</label>
+                        <span>
+                            <input formControlName="elaboratedBY" pInputText name="elaboratedBY" id="elaboratedBY"
+                                type="text" />
+                        </span>
+                        <app-validation-input [formGroup]="reportInformation" formInputName="elaboratedBY"
+                            [validation_messages]="validations">
+                        </app-validation-input>
+                    </div>
+                </div>
+            </form>
+        </p-accordionTab>
+
+        <p-accordionTab header="INFORMACIÓN DE LA UNIDAD MÓVIL" [selected]="isServiceNumber" [disabled]="!isServiceNumber">
+            <form class="ui-g-12" [formGroup]="mobileUnitInformation" *ngIf="mobileUnitInformation">
+                <div class="p-grid p-fluid">
+                    <div class="p-field p-col-12 p-md-3">
+                        <label for="vinNumber">Número de VIN: *</label>
+                        <span>
+                            <div class="p-inputgroup">
+                                <input formControlName="vinNumber" name="vinNumber" id="vinNumber" type="text"
+                                    pInputText placeholder="Número de VIN" [(ngModel)]="vinModel" (ngModelChange)="vinChange()">
+                                <button type="button" pButton pRipple label="Buscar" (click)="searchVin()"></button>
+                            </div>
+                        </span>
+                        <app-validation-input [formGroup]="mobileUnitInformation" formInputName="vinNumber"
+                            [validation_messages]="validations">
+                        </app-validation-input>
+                    </div>
+                    <div class="p-field p-col-12 p-md-2">
+                        <label for="mileage">Kilometraje: *</label>
+                            <div class="p-inputgroup">
+                                <span class="p-inputgroup-addon"><i class="pi pi-hashtag"></i></span>
+                                <input formControlName="mileage" name="mileage" id="mileage" type="text" pInputText />
+                            </div>
+                        <app-validation-input [formGroup]="mobileUnitInformation" formInputName="mileage"
+                            [validation_messages]="validations">
+                        </app-validation-input>
+                    </div>
+                    <div class="p-field p-col-12 p-md-4">
+                        <label for="saleBy">Vendido por:</label>
+                        <span>
+                            <input formControlName="saleBy" name="saleBy" id="saleBy" type="text" pInputText />
+                        </span>
+                        <app-validation-input [formGroup]="mobileUnitInformation" formInputName="saleBy"
+                            [validation_messages]="validations">
+                        </app-validation-input>
+                    </div>
+                    <div class="p-field p-col-12 p-md-3">
+                        <label for="model">Modelo:</label>
+                        <span>
+                            <p-dropdown formControlName="model" [options]="modelDrown" optionLabel="label" name="model"
+                                id="model" appendTo="body" placeholder="Seleccione un modelo"
+                                [style]="{ width: '100%' }" [showClear]="false">
+                            </p-dropdown>
+                        </span>
+                    </div>
+                    <div class="p-field p-col-12 p-md-4">
+                        <label for="engineSerie">Serie de motor: </label>
+                        <span>
+                            <input formControlName="engineSerie" placeholder="Número de serie del motor"
+                                name="engineSerie" id="engineSerie" type="text" pInputText />
+                        </span>
+                        <app-validation-input [formGroup]="mobileUnitInformation" formInputName="engineSerie"
+                            [validation_messages]="validations">
+                        </app-validation-input>
+                    </div>
+                    <div class="p-field p-col-12 p-md-4">
+                        <label for="saleDate">Fecha de venta: </label>
+                        <span>
+                            <i class="pi pi-calendar-plus"></i>
+                            <p-calendar formControlName="saleDate" placeholder="Fecha de venta" [showIcon]="true"
+                                inputId="icon" dateFormat="dd-mm-yy"></p-calendar>
+                        </span>
+                    </div>
+                    <div class="p-field p-col-12 p-md-4">
+                        <label for="owner">Propietario:</label>
+                        <span>
+                            <input formControlName="owner" name="owner" id="owner" type="text" pInputText />
+                        </span>
+                        <app-validation-input [formGroup]="mobileUnitInformation" formInputName="owner"
+                            [validation_messages]="validations">
+                        </app-validation-input>
+                    </div>
+                </div>
+            </form>
+        </p-accordionTab>
+
+        <p-accordionTab header="INFORMACIÓN DEL CLIENTE" [selected]="isServiceNumber" [disabled]="!isServiceNumber">
+            <form class="ui-g-12" [formGroup]="clientInformation" *ngIf="clientInformation">
+                <div class="p-grid p-fluid">
+                    <div class="p-field p-col-12 p-md-6">
+                        <label for="clientName">Nombre del Cliente o Razón Social: *</label>
+                        <span>
+                            <input formControlName="clientName" placeholder="Nombre del cliente" name="clientName"
+                                id="clientName" type="text" pInputText />
+                        </span>
+                        <app-validation-input [formGroup]="clientInformation" formInputName="clientName"
+                            [validation_messages]="validations">
+                        </app-validation-input>
+                    </div>
+                    <div class="p-field p-col-12 p-md-6">
+                        <label for="address">Domicilio: *</label>
+                        <span>
+                            <input formControlName="address" placeholder="Domicilio" name="address" id="address"
+                                type="text" pInputText />
+                        </span>
+                        <app-validation-input [formGroup]="clientInformation" formInputName="address"
+                            [validation_messages]="validations">
+                        </app-validation-input>
+                    </div>
+                    <div class="p-field p-col-12 p-md-3">
+                        <label for="state">Estado: *</label>
+                        <span>
+                            <p-dropdown formControlName="state" [options]="states" optionLabel="label"
+                                name="selectState" id="state" appendTo="body" placeholder="Seleccionar Estado"
+                                [style]="{ width: '100%' }" [showClear]="false" (onChange)="onChangeState()">
+                            </p-dropdown>
+                        </span>
+                        <app-validation-input [formGroup]="clientInformation" formInputName="state"
+                            [validation_messages]="validations">
+                        </app-validation-input>
+                    </div>
+                    <div class="p-field p-col-12 p-md-3">
+                        <label for="location">Municipio / Delegación: *</label>
+                        <span>
+                            <p-dropdown formControlName="location" [options]="locationsDrown" optionLabel="label"
+                                name="selectLocation" id="location" appendTo="body" placeholder="Seleccionar Municipio"
+                                [style]="{ width: '100%' }" [showClear]="true">
+                            </p-dropdown>
+                        </span>
+                        <app-validation-input [formGroup]="clientInformation" formInputName="location"
+                            [validation_messages]="validations">
+                        </app-validation-input>
+                    </div>
+                    <div class="p-field p-col-12 p-md-3">
+                        <label for="phone">Teléfono: *</label>
+                        <span>
+                            <input formControlName="phone" placeholder="Número telefonico" name="phone" id="phone"
+                                type="text" pInputText />
+                        </span>
+                        <app-validation-input [formGroup]="clientInformation" formInputName="phone"
+                            [validation_messages]="validations">
+                        </app-validation-input>
+                    </div>
+                    <div class="p-field p-col-12 p-md-3">
+                        <label for="email">Email:</label>
+                        <span>
+                            <input formControlName="email" placeholder="Correo electronico" name="email" id="email"
+                                type="text" pInputText />
+                        </span>
+                        <app-validation-input [formGroup]="clientInformation" formInputName="email"
+                            [validation_messages]="validations">
+                        </app-validation-input>
+                    </div>
+                </div>
+            </form>
+        </p-accordionTab>
+    </p-accordion>
+    <br>
+    <div>
+        <p-button label="Siguiente" class="p-mr-2 p-mb-2" (onClick)="nextStep()"
+            [disabled]="!(!btnNext && clientInformation.valid && reportInformation.valid && mobileUnitInformation.valid)"
+            icon="pi pi-angle-right" iconPos="right" [style]="{'margin-left': '.5em'}"></p-button>
+    </div>
+</div>
+<ng-template #elseBlock>
+    <p-accordion [multiple]="true">
+        <p-accordionTab header="INFORMACIÓN DEL REPORTE" [selected]="true" [disabled]="true">
+            <form class="ui-g-12" [formGroup]="reportInformation" *ngIf="reportInformation">
+                <div class="p-grid p-fluid">
+                    <div class="p-field p-col-12 p-md-3">
+                        <label for="claimNumber">Número de Reclamo:</label>
+                        <span>
+                            <input formControlName="claimNumber" name="claimNumber" id="claimNumber" type="text"
+                                pInputText />
+                        </span>
+                    </div>
+                    <div class="p-field p-col-12 p-md-3">
+                        <label for="serviceOrderNumber">Número de Orden de Servicio:</label>
+                        <div class="p-inputgroup">
+                            <span class="p-inputgroup-addon"><i class="pi pi-hashtag"></i></span>
+                            <input formControlName="serviceOrderNumber" name="serviceOrderNumber"
+                                id="serviceOrderNumber" type="text" placeholder="Número de orden"
+                                disabled pInputText />
+                        </div>
+                    </div>
+                    <div class="p-field p-col-12 p-md-3">
+                        <label for="status">Estatus:</label>
+                        <span>
+                            <input formControlName="status" name="status"
+                                id="status" type="text" placeholder="Estatus"
+                                disabled pInputText />
+                            <!-- <p-dropdown formControlName="status" [options]="statusDrown" optionLabel="label"
+                                name="status" id="status" appendTo="body" placeholder="Seleccionar Estatus"
+                                [style]="{ width: '100%' }" [showClear]="false">
+                            </p-dropdown> -->
+                        </span>
+                    </div>
+                    <div class="p-field p-col-12 p-md-3">
+                        <label for="reportCreationDate">Fecha de Creación del Reporte:</label>
+                            <p-calendar formControlName="reportCreationDate" [showIcon]="true"
+                                dateFormat="dd/mm/yy"></p-calendar>
+                    </div>
+                    <div class="p-field p-col-12 p-md-3">
+                        <label for="dealerName">Datos del Distribuidor:</label>
+                        <span>
+                            <input formControlName="dealerName" name="dealerName" id="dealerName" type="text"
+                                pInputText />
+                        </span>
+                    </div>
+                    <div class="p-field p-col-12 p-md-3">
+                        <label for="elaboratedBY">Reporte elaborado por:</label>
+                        <span>
+                            <input formControlName="elaboratedBY" pInputText name="elaboratedBY" id="elaboratedBY"
+                                type="text" />
+                        </span>
+                    </div>
+                </div>
+            </form>
+        </p-accordionTab>
+
+        <p-accordionTab header="INFORMACIÓN DE LA UNIDAD MÓVIL" [selected]="true" [disabled]="true">
+            <form class="ui-g-12" [formGroup]="mobileUnitInformation" *ngIf="mobileUnitInformation">
+                <div class="p-grid p-fluid">
+                    <div class="p-field p-col-12 p-md-3">
+                        <label for="vinNumber">Número de VIN:</label>
+                        <span>
+                            <div class="p-inputgroup">
+                                <input formControlName="vinNumber" name="vinNumber" id="vinNumber" type="text"
+                                    pInputText placeholder="Número de VIN" disabled>
+                            </div>
+                        </span>
+                    </div>
+                    <div class="p-field p-col-12 p-md-2">
+                        <label for="mileage">Kilometraje:</label>
+                            <div class="p-inputgroup">
+                                <span class="p-inputgroup-addon"><i class="pi pi-hashtag"></i></span>
+                                <input formControlName="mileage" name="mileage" id="mileage" type="text" disabled pInputText />
+                            </div>
+                    </div>
+                    <div class="p-field p-col-12 p-md-4">
+                        <label for="saleBy">Vendido por:</label>
+                        <span>
+                            <input formControlName="saleBy" name="saleBy" id="saleBy" type="text" pInputText />
+                        </span>
+                    </div>
+                    <div class="p-field p-col-12 p-md-3">
+                        <label for="model">Modelo:</label>
+                        <span>
+                            <p-dropdown formControlName="model" [options]="modelDrown" optionLabel="label" name="model"
+                                id="model" appendTo="body" placeholder="Seleccione un modelo"
+                                [style]="{ width: '100%' }" [showClear]="false">
+                            </p-dropdown>
+                        </span>
+                    </div>
+                    <div class="p-field p-col-12 p-md-4">
+                        <label for="engineSerie">Serie de motor: </label>
+                        <span>
+                            <input formControlName="engineSerie" placeholder="Número de serie del motor"
+                                name="engineSerie" id="engineSerie" type="text" pInputText />
+                        </span>
+                    </div>
+                    <div class="p-field p-col-12 p-md-4">
+                        <label for="saleDate">Fecha de venta: </label>
+                        <span>
+                            <i class="pi pi-calendar-plus"></i>
+                            <p-calendar formControlName="saleDate" placeholder="Fecha de venta" [showIcon]="true"
+                                inputId="icon" dateFormat="dd-mm-yy"></p-calendar>
+                        </span>
+                    </div>
+                    <div class="p-field p-col-12 p-md-4">
+                        <label for="owner">Propietario:</label>
+                        <span>
+                            <input formControlName="owner" name="owner" id="owner" type="text" pInputText />
+                        </span>
+                    </div>
+                </div>
+            </form>
+        </p-accordionTab>
+
+        <p-accordionTab header="INFORMACIÓN DEL CLIENTE" [selected]="true" [disabled]="true">
+            <form class="ui-g-12" [formGroup]="clientInformation" *ngIf="clientInformation">
+                <div class="p-grid p-fluid">
+                    <div class="p-field p-col-12 p-md-6">
+                        <label for="clientName">Nombre del Cliente o Razón Social:</label>
+                        <span>
+                            <input formControlName="clientName" placeholder="Nombre del cliente" name="clientName"
+                                id="clientName" type="text" disabled pInputText />
+                        </span>
+                    </div>
+                    <div class="p-field p-col-12 p-md-6">
+                        <label for="address">Domicilio:</label>
+                        <span>
+                            <input formControlName="address" disabled placeholder="Domicilio" name="address" id="address"
+                                type="text" pInputText />
+                        </span>
+                    </div>
+                    <div class="p-field p-col-12 p-md-3">
+                        <label for="state">Estado:</label>
+                        <span>
+                            <p-dropdown formControlName="state" [options]="states" optionLabel="label"
+                                name="selectState" id="state" appendTo="body" placeholder="Seleccionar Estado"
+                                [style]="{ width: '100%' }" [showClear]="false" (onChange)="onChangeState()">
+                            </p-dropdown>
+                        </span>
+                    </div>
+                    <div class="p-field p-col-12 p-md-3">
+                        <label for="location">Municipio / Delegación:</label>
+                        <span>
+                            <p-dropdown formControlName="location" [options]="locationsDrown" optionLabel="label"
+                                name="selectLocation" id="location" appendTo="body" placeholder="Seleccionar Municipio"
+                                [style]="{ width: '100%' }" [showClear]="true">
+                            </p-dropdown>
+                        </span>
+                    </div>
+                    <div class="p-field p-col-12 p-md-3">
+                        <label for="phone">Teléfono:</label>
+                        <span>
+                            <input formControlName="phone" placeholder="Número telefonico" name="phone" id="phone"
+                                type="text" disabled pInputText />
+                        </span>
+                    </div>
+                    <div class="p-field p-col-12 p-md-3">
+                        <label for="email">Email:</label>
+                        <span>
+                            <input formControlName="email" placeholder="Correo electronico" name="email" id="email"
+                                type="text" pInputText />
+                        </span>
+                    </div>
+                </div>
+            </form>
+        </p-accordionTab>
+    </p-accordion>
+    <br>
+    <div>
+        <p-button label="Siguiente" class="p-mr-2 p-mb-2" (onClick)="nextStep()"
+            icon="pi pi-angle-right" iconPos="right" [style]="{'margin-left': '.5em'}"></p-button>
+    </div>
+</ng-template>

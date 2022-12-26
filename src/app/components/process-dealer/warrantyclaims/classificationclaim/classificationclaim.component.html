@@ -1,0 +1,173 @@
+<p-blockUI [blocked]="blockedDocument">
+    <i class="pi pi-spin pi-spinner" style="font-size: 2rem"></i>
+</p-blockUI>
+
+<p-toast key="tst"></p-toast>
+
+<div class="content-container" *ngIf="!consultForm; else elseBlock">
+    <div class="layout-topbar-separator"></div>
+    <p-accordion>
+        <p-accordionTab header="DETALLE DEL SERVICIO" [selected]="true">
+            <form class="ui-g-12" [formGroup]="datosForm" *ngIf="datosForm">
+                <div class="p-grid p-fluid">
+                    <div class="p-field p-col-12 p-md-3">
+                        <label for="typeClaim">Tipo de reclamo *</label>
+                        <span>
+                            <p-dropdown formControlName="typeClaim" [options]="typeClaims" appendTo="body" optionLabel="label"
+                                name="typeClaim" id="typeClaim" placeholder="Seleccione un tipo de reclamo" [style]="{ width: '100%' }"
+                                [showClear]="false">
+                            </p-dropdown>
+                        </span>
+                        <app-validation-input  [formGroup]="datosForm" formInputName="typeClaim"
+                          [validation_messages]="validations"></app-validation-input>
+                    </div>
+                    <div class="p-field p-col-12 p-md-3">
+                        <label for="grade">Grado *</label>
+                        <span>
+                            <p-dropdown formControlName="grade" [options]="gradeType" appendTo="body" optionLabel="label"
+                                name="selectCountry" id="grade" placeholder="Seleccione un grado" [style]="{ width: '100%' }"
+                                [showClear]="false">
+                            </p-dropdown>
+                        </span>
+                        <app-validation-input [formGroup]="datosForm" formInputName="grade"
+                          [validation_messages]="validations"></app-validation-input>
+                    </div>
+                    <div class="p-field p-col-12 p-md-3">
+                        <label for="servicePerformed">Servicio realizado *</label>
+                        <span>
+                            <!-- <p-dropdown formControlName="servicePerformed" [options]="servicesModel" appendTo="body"
+                                optionLabel="label" name="selectCountry" id="servicePerformed" placeholder="Seleccione un servicio"
+                                [style]="{ width: '100%' }" [showClear]="false">
+                            </p-dropdown>  -->
+                            
+                            <input formControlName="servicePerformed" name="servicePerformed" id="servicePerformed" type="text"
+                                pInputText  autocomplete="off" />
+                        </span>
+
+                        
+
+                        <app-validation-input [formGroup]="datosForm" formInputName="servicePerformed"
+                          [validation_messages]="validations"></app-validation-input>
+                    </div>
+                    <div class="p-field p-col-12 p-md-3">
+                        <label for="categoryProblem">Categoría del problema *</label>
+                        <span>
+                            <p-dropdown formControlName="categoryProblem" [options]="problemType" appendTo="body"
+                                optionLabel="label" name="selectCountry" id="categoryProblem" placeholder="Seleccione una categoria del problema"
+                                [style]="{ width: '100%' }" [showClear]="false">
+                            </p-dropdown>
+                        </span>
+                        <app-validation-input [formGroup]="datosForm" formInputName="categoryProblem"
+                          [validation_messages]="validations"></app-validation-input>
+                    </div>
+                    <div class="p-field p-col-12 p-md-4">
+                        <label for="repairTechnician">Técnico reparador *</label>
+                        <span>
+                            <input formControlName="repairTechnician" placeholder="Nombre del tecnico" name="repairTechnician" id="repairTechnician" type="text" pInputText />
+                        </span>
+                        <app-validation-input [formGroup]="datosForm" formInputName="repairTechnician"
+                          [validation_messages]="validations"></app-validation-input>
+                    </div>
+                    <div class="p-field p-col-12 p-md-4">
+                        <label for="reportedDate">Fecha de falla reportada *</label>
+                        <span>
+                            <p-calendar formControlName="reportedDate" dateFormat="dd/mm/yy" [maxDate]="maxDateReported" [showIcon]="true" inputId="icon"></p-calendar>
+                        </span>
+                        <app-validation-input [formGroup]="datosForm" formInputName="reportedDate" [validation_messages]="validations">
+                        </app-validation-input>
+                    </div>
+                    <div class="p-field p-col-12 p-md-4">
+                        <label for="rapairDate">Fecha de reparación *</label>
+                        <span>
+                            <p-calendar formControlName="rapairDate" dateFormat="dd/mm/yy" [maxDate]="maxDateToRepair" [showIcon]="true" inputId="icon"></p-calendar>
+                        </span>
+                        <app-validation-input [formGroup]="datosForm" formInputName="rapairDate" [validation_messages]="validations">
+                        </app-validation-input>
+                    </div>
+                </div>
+            </form>
+        </p-accordionTab>
+    </p-accordion>
+    <br>
+    <div>
+        <p-button label="Anterior" class="p-mr-2 p-mb-2" (onClick)="backStep()" icon="pi pi-angle-left"></p-button>
+        <p-button label="Siguiente" class="p-mr-2 p-mb-2" (onClick)="nextStep()" icon="pi pi-angle-right" iconPos="right" [style]="{'margin-left': '.5em'}"
+        [disabled]="!(datosForm.valid)"></p-button>
+    </div>
+</div>
+<ng-template #elseBlock>
+    <p-accordion>
+        <p-accordionTab header="DETALLE DEL SERVICIO" [selected]="true" [disabled]="true">
+            <form class="ui-g-12" [formGroup]="datosForm" *ngIf="datosForm">
+                <div class="p-grid p-fluid">
+                    <div class="p-field p-col-12 p-md-3">
+                        <label for="typeClaim">Tipo de reclamo</label>
+                        <span>
+                            <p-dropdown formControlName="typeClaim" [options]="typeClaims" appendTo="body" optionLabel="label"
+                                name="typeClaim" id="typeClaim" placeholder="Seleccione un tipo de reclamo" [style]="{ width: '100%' }"
+                                [showClear]="false">
+                            </p-dropdown>
+                        </span>
+                    </div>
+                    <div class="p-field p-col-12 p-md-3">
+                        <label for="grade">Grado</label>
+                        <span>
+                            <p-dropdown formControlName="grade" [options]="gradeType" appendTo="body" optionLabel="label"
+                                name="selectCountry" id="grade" placeholder="Seleccione un grado" [style]="{ width: '100%' }"
+                                [showClear]="false">
+                            </p-dropdown>
+                        </span>
+                    </div>
+                    <div class="p-field p-col-12 p-md-3">
+                        <label for="servicePerformed">Servicio realizado</label>
+                        <span>
+                            <!-- Comentado en lo que se crea el servicio que traera todos los servicios disponibles -->
+                            <!-- <p-dropdown formControlName="servicePerformed" [options]="servicesModel" appendTo="body"
+                                optionLabel="label" name="selectCountry" id="servicePerformed" placeholder="Seleccione un servicio"
+                                [style]="{ width: '100%' }" [showClear]="false">
+                            </p-dropdown>  -->
+                            <input formControlName="servicePerformed" name="servicePerformed" id="servicePerformed" type="text"
+                                pInputText class="ng-dirty ng-invalid p-invalid p-mr-2" autocomplete="off" />
+                        </span>
+                        <app-validation-input [formGroup]="datosForm" formInputName="servicePerformed"
+                            [validation_messages]="validations">
+                        </app-validation-input>
+                    </div>
+                    <div class="p-field p-col-12 p-md-3">
+                        <label for="categoryProblem">Categoría del problema</label>
+                        <span>
+                            <p-dropdown formControlName="categoryProblem" [options]="problemType" appendTo="body"
+                                optionLabel="label" name="selectCountry" id="categoryProblem" placeholder="Seleccione una categoria del problema"
+                                [style]="{ width: '100%' }" [showClear]="false">
+                            </p-dropdown>
+                        </span>
+                    </div>
+                    <div class="p-field p-col-12 p-md-4">
+                        <label for="repairTechnician">Técnico reparador</label>
+                        <span>
+                            <input formControlName="repairTechnician" placeholder="Nombre del tecnico" name="repairTechnician" id="repairTechnician" type="text" pInputText />
+                        </span>
+                    </div>
+                    <div class="p-field p-col-12 p-md-4">
+                        <label for="reportedDate">Fecha de falla reportada</label>
+                        <span>
+                            <p-calendar formControlName="reportedDate" dateFormat="dd/mm/yy" [maxDate]="maxDateReported" [showIcon]="true" inputId="icon"></p-calendar>
+                        </span>
+                    </div>
+                    <div class="p-field p-col-12 p-md-4">
+                        <label for="rapairDate">Fecha de reparación</label>
+                        <span>
+                            <p-calendar formControlName="rapairDate" dateFormat="dd/mm/yy" [maxDate]="maxDateToRepair" [showIcon]="true" inputId="icon"></p-calendar>
+                        </span>
+                    </div>
+                </div>
+            </form>
+        </p-accordionTab>
+    </p-accordion>
+    <br>
+    <div>
+        <p-button label="Anterior" class="p-mr-2 p-mb-2" (onClick)="backStep()" icon="pi pi-angle-left"></p-button>
+        <p-button label="Siguiente" class="p-mr-2 p-mb-2" (onClick)="nextStep()" icon="pi pi-angle-right" iconPos="right" [style]="{'margin-left': '.5em'}"
+        ></p-button>
+    </div>
+</ng-template>
