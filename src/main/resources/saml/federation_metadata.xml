@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?><md:EntityDescriptor xmlns:md="urn:oasis:names:tc:SAML:2.0:metadata" entityID="https://hondaweb.com/sps/ahmidp/saml20">
+<md:IDPSSODescriptor protocolSupportEnumeration="urn:oasis:names:tc:SAML:2.0:protocol">
+<md:KeyDescriptor use="signing">
+<KeyInfo xmlns="http://www.w3.org/2000/09/xmldsig#">
+<X509Data>
+<X509Certificate>MIICfjCCAeegAwIBAgIIEzhq5GDCIzgwDQYJKoZIhvcNAQEFBQAwcDELMAkGA1UEBhMCVVMxDjAMBgNVBBETBTkwNTAxMQswCQYDVQQIEwJDQTERMA8GA1UEBxMIVG9ycmFuY2UxDDAKBgNVBAoTA0hOQTEMMAoGA1UECxMDSVNEMRUwEwYDVQQDEwxob25kYXdlYi5jb20wHhcNMTMxMTIwMTkwNjU0WhcNNDEwNDA3MTkwNjU0WjBwMQswCQYDVQQGEwJVUzEOMAwGA1UEERMFOTA1MDExCzAJBgNVBAgTAkNBMREwDwYDVQQHEwhUb3JyYW5jZTEMMAoGA1UEChMDSE5BMQwwCgYDVQQLEwNJU0QxFTATBgNVBAMTDGhvbmRhd2ViLmNvbTCBnzANBgkqhkiG9w0BAQEFAAOBjQAwgYkCgYEAsxbFO+1iVhCwYuD02pi7uynggC1lzQ7i7lyJv07jpNXe+DxjYW4ClZTedj0VqTWtrAHtvomzIDLf1TQcNVHtmvwSFp+ieZijCiyJAQ1r6DWaabFZEiiNNYQuHiUNP49rT4XPXckhQnBTS/TcRy7F+655WZaRKwz9xlCLPDGQH7MCAwEAAaMhMB8wHQYDVR0OBBYEFNsu+0crg5wvQklyi7fDMRhTvLiRMA0GCSqGSIb3DQEBBQUAA4GBAH0KFM/EONIeP5WFUhbEshhsCadtwe7odHyh8x5NzLfOZ/oSsheWoHkieYD4srT8N3EFC7xqJowX41K4nfcFxBxiWJgsio462mWbVIXwo3KCLBD0SQKqrJDwuAVEhjfLouh7rBm14sy8q/Zv/sg8tobcvXkKdjy0a5+ENd9NrEYc</X509Certificate>
+</X509Data>
+</KeyInfo>
+</md:KeyDescriptor>
+<md:KeyDescriptor use="encryption">
+<KeyInfo xmlns="http://www.w3.org/2000/09/xmldsig#">
+<X509Data>
+<X509Certificate>MIICfjCCAeegAwIBAgIIEzhq5GDCIzgwDQYJKoZIhvcNAQEFBQAwcDELMAkGA1UEBhMCVVMxDjAMBgNVBBETBTkwNTAxMQswCQYDVQQIEwJDQTERMA8GA1UEBxMIVG9ycmFuY2UxDDAKBgNVBAoTA0hOQTEMMAoGA1UECxMDSVNEMRUwEwYDVQQDEwxob25kYXdlYi5jb20wHhcNMTMxMTIwMTkwNjU0WhcNNDEwNDA3MTkwNjU0WjBwMQswCQYDVQQGEwJVUzEOMAwGA1UEERMFOTA1MDExCzAJBgNVBAgTAkNBMREwDwYDVQQHEwhUb3JyYW5jZTEMMAoGA1UEChMDSE5BMQwwCgYDVQQLEwNJU0QxFTATBgNVBAMTDGhvbmRhd2ViLmNvbTCBnzANBgkqhkiG9w0BAQEFAAOBjQAwgYkCgYEAsxbFO+1iVhCwYuD02pi7uynggC1lzQ7i7lyJv07jpNXe+DxjYW4ClZTedj0VqTWtrAHtvomzIDLf1TQcNVHtmvwSFp+ieZijCiyJAQ1r6DWaabFZEiiNNYQuHiUNP49rT4XPXckhQnBTS/TcRy7F+655WZaRKwz9xlCLPDGQH7MCAwEAAaMhMB8wHQYDVR0OBBYEFNsu+0crg5wvQklyi7fDMRhTvLiRMA0GCSqGSIb3DQEBBQUAA4GBAH0KFM/EONIeP5WFUhbEshhsCadtwe7odHyh8x5NzLfOZ/oSsheWoHkieYD4srT8N3EFC7xqJowX41K4nfcFxBxiWJgsio462mWbVIXwo3KCLBD0SQKqrJDwuAVEhjfLouh7rBm14sy8q/Zv/sg8tobcvXkKdjy0a5+ENd9NrEYc</X509Certificate>
+</X509Data>
+</KeyInfo>
+<md:EncryptionMethod Algorithm="http://www.w3.org/2001/04/xmlenc#rsa-1_5"/>
+</md:KeyDescriptor>
+<md:ArtifactResolutionService Binding="urn:oasis:names:tc:SAML:2.0:bindings:SOAP" Location="https://hondaweb.com/sps/ahmidp/saml20/soap" index="0" isDefault="true"/>
+<md:NameIDFormat>urn:oasis:names:tc:SAML:2.0:nameid-format:persistent</md:NameIDFormat>
+<md:NameIDFormat>urn:oasis:names:tc:SAML:2.0:nameid-format:transient</md:NameIDFormat>
+<md:NameIDFormat>urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress</md:NameIDFormat>
+<md:NameIDFormat>urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified</md:NameIDFormat>
+<md:SingleSignOnService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST" Location="https://hondaweb.com/sps/ahmidp/saml20/login"/>
+<md:SingleSignOnService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect" Location="https://hondaweb.com/sps/ahmidp/saml20/login"/>
+</md:IDPSSODescriptor>
+<md:Organization>
+<md:OrganizationName xml:lang="en">American Honda Motor Co., Inc.</md:OrganizationName>
+<md:OrganizationDisplayName xml:lang="en">American Honda Motor Co., Inc.</md:OrganizationDisplayName>
+<md:OrganizationURL xml:lang="en"/>
+</md:Organization>
+</md:EntityDescriptor>

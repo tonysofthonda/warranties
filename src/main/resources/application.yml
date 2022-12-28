@@ -1,0 +1,28 @@
+server:
+    port: 8082
+    servlet:
+        context-path: /security
+        session:
+          tracking-modes: cookie
+spring:
+    security:
+        user:
+            name: user
+            password: paswd
+    main:
+      allow-circular-references: true
+    profiles:
+        active: prod
+        
+saml:
+  keystore:
+    location: classpath:saml/keystore.jks
+    alias: garantiasMotos
+    password: garantias
+  metadata:
+    location: /saml/federation_metadata.xml
+  #QA
+  #idp: https://dev.hondaweb.com/sps/hondasaml20fed/saml20
+  #PROD
+  idp: https://hondaweb.com/sps/ahmidp/saml20
+  sp: WarrantiesID

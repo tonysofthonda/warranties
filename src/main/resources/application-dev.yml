@@ -1,0 +1,27 @@
+custom-ldap:
+  base: DC=am,DC=mds,DC=honda,DC=com
+  password: H2018in18
+  referral: follow
+  url: ldap://amhcldc02.am.mds.honda.com:389/
+  userDn: CN=APP-THIRD-HOUSE-ADMIN,OU=Non-Person,OU=Users,OU=HDM,OU=Engineering,OU=Honda Global,DC=am,DC=mds,DC=honda,DC=com
+  userSearchFilter: (sAMAccountName={0})
+config:
+  security:
+    oauth:
+      client:
+        id: HDM_Honda
+        secret: HDM_Honda_Secret_2021
+      jwt:
+        key: HDM_HONDA_KEY_DECIPHER_TOKENS_2021
+application:
+  enableCors: true
+  allowedOrigin: http://127.0.0.1:4200, http://localhost:4200
+
+frontend:
+  main-url: http://localhost:4200
+  saml-view-url: http://localhost:4200/#/saml
+
+backend:
+  protocol: http
+  servername: localhost
+  include-port: true
