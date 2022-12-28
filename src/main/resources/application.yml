@@ -1,0 +1,85 @@
+# SPRING BOOT Profile values: dev, qa, prod   (application-dev.properties, application-qa...)
+# properties will be replaced for those that exist on specific profile properties file
+spring:
+  application:
+    name: warrantiesmg
+  profiles:
+    active: dev
+  jmx: 
+    default-domain: warrantiesmg
+  main:
+    allow-circular-refences: true
+# SPRING BOOT ACTUATOR
+endpoints: 
+  enabled: true
+# use security for accessing Actuator endpoints
+  sensitive: false
+# Ensure that ObjectNames are modified in case of conflict (when deploying multiple war on app server)
+  jmx:
+    unique-names: true
+# JMX domain name.
+    domain: spboot.jmx.warrantiesmg
+
+# Configuración optima de balanceador ribbon
+ribbon:
+  ReadTimeout: 300000
+  ConnectTimeout: 300000
+ 
+# Configuración optima de hystrix  
+hystrix:
+  threadpool:
+    default:
+      allowMaximumSizeToDivergeFromCoreSize: true
+      maximumSize: 200
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 60000
+        timeout:
+          enabled: false
+          
+# Configuración de llamadas remotas a otros MS se debe especificar ruta y basePath          
+correos:
+  ribbon:
+    listOfServers: http://localhost:8082
+
+# Procesos Cron.  
+custom:
+  period:
+    cron: 0 0 0 ? * MON-FRI
+    
+# SAML - CONFIG
+#saml:
+#  keystore:
+#    location: classpath:saml/keystore.jks
+#    alias: garantiasMetadata
+#    password: garantias
+#  idp: # URL
+#  sp:
+    
+# SAML - CONFIG
+#jwt-secret: &F)J@NcRfUjWnZr4u7x!A%D*G-KaPdSg
+
+# LDAP CONFIGURATION
+#custom-ldap:
+#  base: DC=am,DC=mds,DC=honda,DC=com
+#  password: H2018in18
+#  referral: follow
+#  url: ldap://amhcldc02.am.mds.honda.com:389/
+#  userDn: CN=APP-THIRD-HOUSE-ADMIN,OU=Non-Person,OU=Users,OU=HDM,OU=Engineering,OU=Honda Global,DC=am,DC=mds,DC=honda,DC=com
+#  userSearchFilter: (sAMAccountName={0})
+#
+#config:
+#  security:
+#    oauth:
+#      client:
+#        id: HDM_Honda
+#        secret: HDM_Honda_Secret_2021
+#      jwt:
+#        key: HDM_HONDA_KEY_DECIPHER_TOKENS_2021
+#        
+#application:
+#  enableCors: true
+    
